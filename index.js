@@ -12,7 +12,7 @@ const saveRoutes = require('./Routes/saveRoutes');
 
 const listeningPort = process.env.API_LISTENING_PORT;
 
-app.use(cors({origin : *,
+app.use(cors({origin : '*',
     credentials:true,
     methods:['GET','POST'],
     allowedHeaders: 'Content-Type,Authorization'
