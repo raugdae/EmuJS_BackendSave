@@ -2,8 +2,6 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 
-const router = express.Router();
-
 // Add this before your routes
 router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
