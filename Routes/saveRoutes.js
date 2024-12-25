@@ -2,6 +2,13 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    next();
+});
 
 router.get('/api', async(req,res) =>{
     res.status(200).json({messsage : 'API savemanagement online'});
