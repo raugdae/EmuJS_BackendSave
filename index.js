@@ -5,6 +5,10 @@ const pool = require('./db');
 const authRoutes = require('./Routes/auth');
 const authenticateToken = require('./Routes/authMiddleware');
 
+const saveRoutes = require('./Routes/saveRoutes');
+const listeningPort = process.env.API_LISTENING_PORT;
+
+
 
 const app = express();
 app.use(cors({
@@ -21,9 +25,8 @@ app.use(cors({
     next();
  });
 
-const saveRoutes = require('./Routes/saveRoutes');
 
-const listeningPort = process.env.API_LISTENING_PORT;
+
 
 
 app.use(express.json({limit:'100mb'}));
