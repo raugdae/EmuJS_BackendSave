@@ -7,10 +7,7 @@ const authenticateToken = require('./Routes/authMiddleware');
 
 
 const app = express();
-app.use(cors({credentials:true,
-    methods:['GET','POST'],
-    allowedHeaders: 'Content-Type,Authorization'
-}));
+app.use(cors());
 
 const saveRoutes = require('./Routes/saveRoutes');
 
