@@ -2,6 +2,18 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 
+const router = express.Router();
+
+// Add this before your routes
+router.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
+// Your existing routes below
+
 router.get('/api', async(req,res) =>{
     res.status(200).json({messsage : 'API savemanagement online'});
 });
