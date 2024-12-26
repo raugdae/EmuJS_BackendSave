@@ -1,6 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
+const authenticateToken = require('./authMiddleware');
 
 // Add this before your routes
 router.use((req, res, next) => {
@@ -10,24 +11,29 @@ router.use((req, res, next) => {
     next();
 });
 
+router.use(authenticateToken);
+
 // Your existing routes below
 
 router.get('/api', async(req,res) =>{
-    res.status(200).json({messsage : 'API savemanagement online'});
+    res.status(200).json({messsage : 'API savemanagement online',
+        authenticateTUser : req.user.id
+    });
 });
 
 router.get('/getsavefile', async(req,res) => {
     const {gamefile} = req.query;
+    const userId = req.user.id;
 
     console.log(gamefile);
 
     try{
-        const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) LIMIT 1";
-        const value = [gamefile];
+        const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2 LIMIT 1";
+        const value = [gamefile,userId];
         const result = await pool.query(query,value);
 
         if (result.rows.length === 0){
-            console.log("No record found");
+            console.log("No savefile found");
             return res.status(404);
         }
         res.status(200).json(result.rows);
@@ -41,13 +47,14 @@ router.get('/getsavefile', async(req,res) => {
 
 router.get('/savefileexists', async(req,res) => {
 
-    const {userid,fileName} = req.query;
+    const {fileName} = req.query;
+    const userId = req.user.id;
 
-    console.log(userid);
+    console.log(userId);
 
     try{
         const query = 'SELECT id FROM games WHERE fk_user = $1 AND fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $2)';
-        const values =[userid, fileName];
+        const values =[userId, fileName];
         const result = await pool.query(query,values);
 
         if (result.rows.length === 0){
@@ -67,11 +74,12 @@ router.get('/savefileexists', async(req,res) => {
 
 
 router.post('/setsavefile', async(req, res) => {
-    const {fileName, size, data, user, game} = req.body;
+    const {fileName, size, data, game} = req.body;
+    const userId = req.user.id;
 
     try{
         const query = 'INSERT INTO games (file_name, size,data,fk_user,fk_gamelist) VALUES ($1, $2,$3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) RETURNING *';
-        const values = [fileName, size, JSON.stringify(data),user,game];
+        const values = [fileName, size, JSON.stringify(data),userId,game];
         const result = await pool.query(query,values);
 
         res.status(201).json({message : 'Insert file OK'});
