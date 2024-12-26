@@ -34,5 +34,7 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 
 
 app.use('/api/savemanagement', saveRoutes);
+app.use('/api/auth',authRoutes);
+
 
 app.listen(listeningPort,() => console.log('API running on port : '+listeningPort))

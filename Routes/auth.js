@@ -11,13 +11,16 @@ router.post('/register', async (req, res) => {
     const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
+    console.log(email +"  "+hashedPassword);
+
     const result = await pool.query(
-      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id',
+      'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id',
       [email, hashedPassword]
     );
     
     res.status(201).json({ message: 'User created' });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: 'Registration failed' });
   }
 });
