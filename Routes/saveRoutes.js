@@ -3,15 +3,15 @@ const router = express.Router();
 const pool = require('./../db');
 const authenticateToken = require('./authMiddleware');
 
-// Add this before your routes
+ /*// Add this before your routes
 router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
-});
+});*/
 
-router.use(authenticateToken);
+//router.use(authenticateToken);
 
 // Your existing routes below
 
