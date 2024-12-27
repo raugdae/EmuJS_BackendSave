@@ -22,8 +22,10 @@ router.get('/api', async(req,res) =>{
 });
 
 router.get('/getsavefile', async(req,res) => {
-    const {gamefile} = req.query;
-    const userId = req.user.id;
+
+    console.log(req.body);
+    const {gamefile} = req.body;
+    //const userId = req.user.id;
 
     console.log(gamefile);
 
@@ -47,8 +49,8 @@ router.get('/getsavefile', async(req,res) => {
 
 router.get('/savefileexists', async(req,res) => {
 
-    const {fileName} = req.query;
-    const userId = req.user.id;
+    const {fileName} = req.body;
+    
 
     console.log(userId);
 
@@ -75,7 +77,7 @@ router.get('/savefileexists', async(req,res) => {
 
 router.post('/setsavefile', async(req, res) => {
     const {fileName, size, data, game} = req.body;
-    const userId = req.user.id;
+    
 
     try{
         const query = 'INSERT INTO games (file_name, size,data,fk_user,fk_gamelist) VALUES ($1, $2,$3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) RETURNING *';
