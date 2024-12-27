@@ -76,7 +76,7 @@ router.get('/savefileexists', async(req,res) => {
 
 
 router.post('/setsavefile', async(req, res) => {
-    const {fileName, size, data, game} = req.body;
+    const {fileName, size, data, game, userId} = req.body;
     
 
     try{
