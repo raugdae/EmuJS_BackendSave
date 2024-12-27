@@ -24,7 +24,7 @@ router.get('/api', async(req,res) =>{
 router.get('/getsavefile', async(req,res) => {
 
     console.log(req.body);
-    const {gamefile} = req.body;
+    const {gamefile,userId} = req.query;
     //const userId = req.user.id;
 
     console.log(gamefile);
