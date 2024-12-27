@@ -15,11 +15,11 @@ router.use((req, res, next) => {
 
 // Your existing routes below
 
-router.get('/api', async(req,res) =>{
+/*router.get('/api', async(req,res) =>{
     res.status(200).json({messsage : 'API savemanagement online',
         authenticateTUser : req.user.id
     });
-});
+});*/
 
 router.get('/getsavefile', async(req,res) => {
 
@@ -49,7 +49,7 @@ router.get('/getsavefile', async(req,res) => {
 
 router.get('/savefileexists', async(req,res) => {
 
-    const {fileName} = req.body;
+    const {fileName,userId} = req.body;
     
 
     console.log(userId);
