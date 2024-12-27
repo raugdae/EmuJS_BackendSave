@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const pool = require('./db');
-const authRoutes = require('./Routes/auth');
-const authenticateToken = require('./Routes/authMiddleware');
+//const authRoutes = require('./Routes/auth');
+//const authenticateToken = require('./Routes/authMiddleware');
 
 const saveRoutes = require('./Routes/saveRoutes');
 const listeningPort = process.env.API_LISTENING_PORT;
@@ -15,7 +15,6 @@ const app = express();
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
  }));
  
 
@@ -34,7 +33,7 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 
 
 app.use('/api/savemanagement', saveRoutes);
-app.use('/api/auth',authRoutes);
+//app.use('/api/auth',authRoutes);
 
 
 app.listen(listeningPort,() => console.log('API running on port : '+listeningPort))
