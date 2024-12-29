@@ -64,19 +64,57 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 router.post('/setsavefile', authMiddleware, async(req, res) => {
     const {fileName, size, data, game} = req.body;
     const userId = req.user.userId;
-    
 
-    try{
-        const query = 'INSERT INTO games (file_name, size,data,fk_user,fk_gamelist) VALUES ($1, $2,$3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) RETURNING *';
-        const values = [fileName, size, JSON.stringify(data),userId,game];
-        const result = await pool.query(query,values);
-
-        res.status(201).json({message : 'Insert file OK'});
+    // Validate input
+    if (!fileName || !size || !data || !game) {
+        return res.status(400).json({ message: 'Missing required fields' });
     }
-    catch (err){
-        res.status(500).json({message : 'Server error', error:err.message});
-    }
+   
+    try {
+        // First check if the game exists
+        const checkGameQuery = 'SELECT id FROM gamelist WHERE filename = $1';
+        const gameCheck = await pool.query(checkGameQuery, [game]);
+        
+        if (gameCheck.rows.length === 0) {
+            return res.status(404).json({ message: 'Game not found in gamelist' });
+        }
 
+        const query = `
+            INSERT INTO games (file_name, size, data, fk_user, fk_gamelist) 
+            VALUES ($1, $2, $3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) 
+            RETURNING *`;
+        
+        const values = [fileName, size, JSON.stringify(data), userId, game];
+        const result = await pool.query(query, values);
+        
+        res.status(201).json({ message: 'Insert file OK' });
+    }
+    catch (err) {
+        console.error('Database error:', err);  // Log the full error
+        
+        // Send more specific error messages based on the error type
+        if (err.code === '23505') {  // Unique violation
+            return res.status(409).json({ 
+                message: 'Save file already exists',
+                error: err.message 
+            });
+        } else if (err.code === '23503') {  // Foreign key violation
+            return res.status(400).json({ 
+                message: 'Invalid game or user reference',
+                error: err.message 
+            });
+        } else if (err.code === '22P02') {  // Invalid text representation
+            return res.status(400).json({ 
+                message: 'Invalid data format',
+                error: err.message 
+            });
+        }
+        
+        res.status(500).json({ 
+            message: 'Server error', 
+            error: err.message 
+        });
+    }
 });
 
 router.post('/updatesavefile', authMiddleware, async (req, res) =>{
