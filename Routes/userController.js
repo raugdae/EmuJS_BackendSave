@@ -1,7 +1,11 @@
-const UserModel = require('./userModel');
+const express = require('express');
+const router = express.Router();
+const pool = require('../db');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-async function register(req, res) {
+// Route pour l'enregistrement
+router.post('/', async (req, res) => {
     try {
         console.log('registering function entered');
         const { email, password } = req.body;
@@ -10,7 +14,35 @@ async function register(req, res) {
             return res.status(400).json({ message: 'email or password should not be empty' });
         }
 
-        const user = await UserModel.createUser(email, password);
+        // Vérifie si l'utilisateur existe
+        const userExists = await pool.query(
+            'SELECT * FROM users WHERE email = $1',
+            [email]
+        );
+
+        if (userExists.rows.length > 0) {
+            return res.status(409).json({ message: 'User already exists' });
+        }
+
+        // Hash le mot de passe
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Insère le nouvel utilisateur
+        const result = await pool.query(
+            `INSERT INTO users (
+                email, 
+                password, 
+                lastlogin,
+                locked
+            ) VALUES ($1, $2, CURRENT_DATE, false) 
+            RETURNING id, email`,
+            [email, hashedPassword]
+        );
+
+        const user = result.rows[0];
+
+        // Crée le token
         const token = jwt.sign(
             { userId: user.id, email: user.email },
             process.env.JWT_SECRET,
@@ -18,14 +50,18 @@ async function register(req, res) {
         );
 
         res.status(201).json({
-            message: 'User created',
-            user: { id: user.id, email: user.email },
+            message: 'User created successfully',
+            user: {
+                id: user.id,
+                email: user.email
+            },
             token
         });
+
     } catch (error) {
         console.error('Registration error:', error);
-        return res.status(500).json({ message: 'Error while creating user' });
+        res.status(500).json({ message: 'Error while creating user' });
     }
-}
+});
 
-module.exports = { register };  // Export comme objet
+module.exports = router;
