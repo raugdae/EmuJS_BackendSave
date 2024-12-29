@@ -37,9 +37,6 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
     const userId = req.user.userId;
     
 
-    console.log(userId);
-    console.log(fileName);
-
     try{
         const query = 'SELECT id FROM games WHERE fk_user = $1 AND fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $2)';
         const values =[userId, fileName];
