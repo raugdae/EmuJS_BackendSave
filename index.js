@@ -12,7 +12,7 @@ const app = express();
 
 const corsOptions = {
    origin: [
-       'http://remote.raug-info.ch:8081'  // Votre frontend uniquement
+       '*'  // Votre frontend uniquement
    ],
    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 
 // Middleware pour les headers CORS
 app.use((req, res, next) => {
-   res.header('Access-Control-Allow-Origin', 'http://remote.raug-info.ch:8081');
+   res.header('Access-Control-Allow-Origin', '*');
    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
    res.header('Access-Control-Allow-Credentials', 'true');
