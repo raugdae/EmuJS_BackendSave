@@ -46,7 +46,7 @@ app.use('/api', userRoutes);
 
 //protected routes
 
-app.use('/api/savemanagement', authMiddleware, saveRoutes);
+app.use('/api/savemanagement', saveRoutes);
 
 
 app.listen(listeningPort,() => console.log('API running on port : '+listeningPort))

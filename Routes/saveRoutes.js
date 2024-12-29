@@ -1,7 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
-const authenticateToken = require('./authMiddleware');
+const authMiddleware = require('./authMiddleware');
 
 
 router.get('/getsavefile', authMiddleware, async(req,res) => {
