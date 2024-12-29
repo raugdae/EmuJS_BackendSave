@@ -12,7 +12,10 @@ const app = express();
 
 app.use(cors({
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    credentials: true, // Enable credentials (cookies, authorization headers, etc)
+    maxAge: 86400 // Cache preflight request results for 24 hours
  }));
 
 app.use(express.json({limit:'100mb'}));
