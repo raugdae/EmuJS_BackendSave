@@ -32,7 +32,7 @@ router.get('/getsavefile', authMiddleware, async(req,res) => {
 router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
     console.log('Entering savefilecheck API');
-    
+
     const {fileName} = req.body;
     const userId = req.user.userId;
     
@@ -50,7 +50,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
         }
 
         res.status(200).json(result.rows);
-        //console.log(result.rows[0]);
+        console.log(result);
         
 
     }catch (err){
