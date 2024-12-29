@@ -64,6 +64,7 @@ router.post('/setsavefile', authMiddleware, async(req, res) => {
     
 
     try{
+        console.log('entering setsavefile API');
         const query = 'INSERT INTO games (file_name, size,data,fk_user,fk_gamelist) VALUES ($1, $2,$3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) RETURNING *';
         const values = [fileName, size, JSON.stringify(data),userId,game];
         const result = await pool.query(query,values);
