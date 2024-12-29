@@ -7,7 +7,7 @@ const authMiddleware = require('./authMiddleware');
 router.get('/getsavefile', authMiddleware, async(req,res) => {
 
     const {gamefile} = req.query;
-    const userId = req.user.id;
+    const userId = req.user.userId;
 
     console.log(userId);
     
@@ -32,7 +32,7 @@ router.get('/getsavefile', authMiddleware, async(req,res) => {
 router.get('/savefileexists', authMiddleware,async(req,res) => {
 
     const {fileName} = req.body;
-    const userId = req.user.id;
+    const userId = req.user.userId;
     
 
     console.log(userId);
@@ -60,7 +60,7 @@ router.get('/savefileexists', authMiddleware,async(req,res) => {
 
 router.post('/setsavefile', authMiddleware, async(req, res) => {
     const {fileName, size, data, game} = req.body;
-    const userId = req.user.id;
+    const userId = req.user.userId;
     
 
     try{
