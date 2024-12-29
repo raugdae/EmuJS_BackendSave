@@ -35,7 +35,10 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
     const {fileName} = req.query;
     const userId = req.user.userId;
-       
+
+    console.log(fileName);
+    console.log(userId);
+    
 
     try{
         const query = 'SELECT id FROM games WHERE fk_user = $1 AND fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $2)';
@@ -48,7 +51,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
         }
 
         res.status(200).json(result.rows);
-        //console.log(result);
+        console.log(result);
         
 
     }catch (err){
@@ -64,9 +67,6 @@ router.post('/setsavefile', authMiddleware, async(req, res) => {
     
 
     try{
-
-        console.log(fileName, size, data,userId,game);
-        
         const query = 'INSERT INTO games (file_name, size,data,fk_user,fk_gamelist) VALUES ($1, $2,$3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) RETURNING *';
         const values = [fileName, size, JSON.stringify(data),userId,game];
         const result = await pool.query(query,values);
