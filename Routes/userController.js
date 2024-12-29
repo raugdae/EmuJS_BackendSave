@@ -75,12 +75,12 @@ router.post('/login', async (req,res) =>{
 
         console.log(email, password);
 
-        if (!email || !password){
+        /*if (!email || !password){
             res.status(403).json({message:'enter credentials'});
-        }
+        }*/
         const userExist = await pool.query('SELECT * FROM users WHERE email = $1',[email]);
 
-        if (userExist.rows.length ===0){
+        if (userExist.rows.length === 0){
             res.status(403).json({messge:'User not found'});
         }
 
