@@ -11,7 +11,7 @@ const listeningPort = process.env.API_LISTENING_PORT;
 const app = express();
 
 app.use(cors({
-    origin: '*',
+    origin: 'http://remote.raug-info.ch:8081',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials: true, // Enable credentials (cookies, authorization headers, etc)
