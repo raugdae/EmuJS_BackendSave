@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 
 
-    async register(req,res){
+    async function register(req,res){
         try{
             console.log('registering fucntion entered');
             const {email, password} = req.body;
