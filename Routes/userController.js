@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 router.post('/register', async (req, res) => {
     try {
         console.log('registering function entered');
-        const { email, password } = req.body;
+        const { email, password, username } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ message: 'email or password should not be empty' });
@@ -34,10 +34,11 @@ router.post('/register', async (req, res) => {
                 email, 
                 password, 
                 lastlogin,
-                locked
-            ) VALUES ($1, $2, CURRENT_DATE, false) 
+                locked,
+                nickname
+            ) VALUES ($1, $2, CURRENT_DATE, false,$3) 
             RETURNING id, email`,
-            [email, hashedPassword]
+            [email, hashedPassword, username]
         );
 
         const user = result.rows[0];
