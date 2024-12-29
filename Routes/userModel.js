@@ -2,8 +2,9 @@ const pool = require('../db');
 const bycrpt = require('bcrypt');
 
 class UserModel{
-    static async creatUser(email,password){
+    static async createUser(email,password){
         try {
+            console.log(crea)
             const userExistes = await pool.query(
                 'SELECT * FROM users WHERE email = $1',
                 [email]

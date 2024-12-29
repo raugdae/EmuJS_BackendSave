@@ -5,6 +5,7 @@ class UserController{
 
     static async register(req,res){
         try{
+            console.log('registering fucntion entered');
             const {email, password} = req.body;
 
             if(!email || !password) {

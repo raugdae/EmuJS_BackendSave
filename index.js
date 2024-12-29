@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const pool = require('./db');
 
 const saveRoutes = require('./Routes/saveRoutes');
-const userCreation = require('./Routes/userModel');
+const userCreation = require('./Routes/userController');
 const authMiddleware = require('./Routes/authMiddleware');
 const listeningPort = process.env.API_LISTENING_PORT;
 

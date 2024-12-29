@@ -3,32 +3,11 @@ const router = express.Router();
 const pool = require('./../db');
 const authenticateToken = require('./authMiddleware');
 
- /*// Add this before your routes
-router.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});*/
-
-//router.use(authenticateToken);
-
-// Your existing routes below
-
-/*router.get('/api', async(req,res) =>{
-    res.status(200).json({messsage : 'API savemanagement online',
-        authenticateTUser : req.user.id
-    });
-});*/
 
 router.get('/getsavefile', async(req,res) => {
 
-    
     const {gamefile,userId} = req.query;
     
-
-    console.log("Game : $1 UserID : $2",gamefile,userId);
-
     try{
         const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2 LIMIT 1";
         const value = [gamefile,userId];
