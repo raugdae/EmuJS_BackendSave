@@ -73,8 +73,7 @@ router.post('/login', async (req,res) =>{
 
         const { email , password } = req.body;
 
-        console.log(email, password);
-
+        
         /*if (!email || !password){
             res.status(403).json({message:'enter credentials'});
         }*/
@@ -84,7 +83,7 @@ router.post('/login', async (req,res) =>{
             res.status(403).json({messge:'User not found'});
         }
 
-        const selectedUser = userExist[0];
+        const selectedUser = userExist.rows[0];
 
         console.log(selectedUser);
 
