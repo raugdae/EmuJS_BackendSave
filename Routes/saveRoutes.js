@@ -23,11 +23,11 @@ router.use((req, res, next) => {
 
 router.get('/getsavefile', async(req,res) => {
 
-    console.log(req.body);
+    
     const {gamefile,userId} = req.query;
-    //const userId = req.user.id;
+    
 
-    console.log(gamefile);
+    console.log("Game : $1 UserID : $2",gamefile,userId);
 
     try{
         const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2 LIMIT 1";
