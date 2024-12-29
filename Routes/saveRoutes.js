@@ -29,8 +29,10 @@ router.get('/getsavefile', authMiddleware, async(req,res) => {
 });
 
 
-router.get('/savefileexists', authMiddleware,async(req,res) => {
+router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
+    console.log('Entering savefilecheck API');
+    
     const {fileName} = req.body;
     const userId = req.user.userId;
     
