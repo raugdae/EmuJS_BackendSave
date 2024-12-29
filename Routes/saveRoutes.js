@@ -8,6 +8,8 @@ router.get('/getsavefile', authMiddleware, async(req,res) => {
 
     const {gamefile} = req.query;
     const userId = req.user.id;
+
+    console.log(userId);
     
     try{
         const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2";
