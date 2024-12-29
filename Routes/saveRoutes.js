@@ -47,7 +47,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
             res.status(404);
         }
 
-        res.status(200).json(result.rows[0]);
+        res.status(200).json(result.rows);
         //console.log(result);
         
 
@@ -84,7 +84,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const query = 'UPDATE games SET size = $2, data = $3::jsonb WHERE id = $1';
         const values = [saveid,size,JSON.stringify(data)];
 
-        //console.log(values);
+        console.log(values);
 
         const result = await pool.query(query,values);
     
