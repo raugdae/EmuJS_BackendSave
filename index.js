@@ -10,13 +10,30 @@ const listeningPort = process.env.API_LISTENING_PORT;
 
 const app = express();
 
-app.use(cors({
-    origin: 'http://remote.raug-info.ch:8081',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    credentials: true, // Enable credentials (cookies, authorization headers, etc)
-    maxAge: 86400 // Cache preflight request results for 24 hours
- }));
+const corsOptions = {
+   origin: [
+       'http://remote.raug-info.ch:8081'  // Votre frontend uniquement
+   ],
+   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+   credentials: true,
+   maxAge: 86400
+};
+
+app.use(cors(corsOptions));
+
+// Middleware pour les headers CORS
+app.use((req, res, next) => {
+   res.header('Access-Control-Allow-Origin', 'http://remote.raug-info.ch:8081');
+   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+   res.header('Access-Control-Allow-Credentials', 'true');
+   
+   if (req.method === 'OPTIONS') {
+       return res.status(200).end();
+   }
+   next();
+});
 
 app.use(express.json({limit:'100mb'}));
 app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000}));
