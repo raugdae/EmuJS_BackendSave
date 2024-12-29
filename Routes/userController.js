@@ -24,3 +24,5 @@ const jwt = require('jsonwebtoken');
             return res.status(400).json({message : 'error while creating user'});
         }
     }
+
+    module.export = {register};
