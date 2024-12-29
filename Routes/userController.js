@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 
 
-    async function register(req,res){
+    async register(req,res){
         try{
             console.log('registering fucntion entered');
             const {email, password} = req.body;
@@ -25,4 +25,4 @@ const jwt = require('jsonwebtoken');
         }
     }
 
-    module.export = {register};
+    module.exports = {register};
