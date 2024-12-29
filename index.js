@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const pool = require('./db');
 
 const saveRoutes = require('./Routes/saveRoutes');
-const userCreation = require('./Routes/userController');
+const {userCreation} = require('./Routes/userController');
 const authMiddleware = require('./Routes/authMiddleware');
 const listeningPort = process.env.API_LISTENING_PORT;
 
@@ -26,7 +26,7 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 // Public routes
 
 app.get('/api/status',(req,res) => {res.status(200).json({message :"API Online"})});
-app.use('/api/register', userCreation);
+app.post('/api/register', userCreation);
 
 
 //protected routes
