@@ -33,7 +33,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
     console.log('Entering savefilecheck API');
 
-    const {fileName} = req.body;
+    const {fileName} = req.query;
     const userId = req.user.userId;
 
     console.log(fileName);
