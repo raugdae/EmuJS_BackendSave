@@ -67,10 +67,13 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req,res) =>{
 
     console.log("Entering login function");
-
-
     try {
+
+        console.log(req.body);
+
         const {email,password} = req.body;
+
+        FileSystem.log(email, password);
 
         if (!email || !password){
             res.status(403).json({message:'enter credentials'});
