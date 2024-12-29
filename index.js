@@ -41,7 +41,7 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 // Public routes
 
 app.get('/api/status',(req,res) => {res.status(200).json({message :"API Online"})});
-app.use('/api/register', userRoutes);
+app.use('/api', userRoutes);
 
 
 //protected routes
