@@ -83,7 +83,7 @@ router.post('/login', async (req,res) =>{
 
         const selectedUser = userExist[0];
 
-        console.log(selectedUser.email+" "+selectedUser.password);
+        console.log(selectedUser);
 
         const validPassword = await bcrypt.compare(this.password,selectedUser.password);
 
