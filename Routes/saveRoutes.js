@@ -18,7 +18,7 @@ router.get('/getsavefile', authMiddleware, async(req,res) => {
 
         if (result.rows.length === 0){
             console.log("No savefile found");
-            return res.status(404);
+            return res.status(404).json({message:"No savefile found"});
         }
         res.status(200).json(result.rows);
     }
