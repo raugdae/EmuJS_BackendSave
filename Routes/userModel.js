@@ -29,4 +29,4 @@ const bycrpt = require('bcrypt');
     }
 
 
-module.exports = {userModel};
+module.exports = {createUser};
