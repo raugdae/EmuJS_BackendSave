@@ -4,12 +4,13 @@ const pool = require('./../db');
 const authenticateToken = require('./authMiddleware');
 
 
-router.get('/getsavefile', async(req,res) => {
+router.get('/getsavefile', authMiddleware, async(req,res) => {
 
-    const {gamefile,userId} = req.query;
+    const {gamefile} = req.query;
+    const userId = req.user.id;
     
     try{
-        const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2 LIMIT 1";
+        const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2";
         const value = [gamefile,userId];
         const result = await pool.query(query,value);
 
@@ -26,9 +27,10 @@ router.get('/getsavefile', async(req,res) => {
 });
 
 
-router.get('/savefileexists', async(req,res) => {
+router.get('/savefileexists', authMiddleware,async(req,res) => {
 
-    const {fileName,userId} = req.body;
+    const {fileName} = req.body;
+    const userId = req.user.id;
     
 
     console.log(userId);
@@ -54,8 +56,9 @@ router.get('/savefileexists', async(req,res) => {
 });
 
 
-router.post('/setsavefile', async(req, res) => {
-    const {fileName, size, data, game, userId} = req.body;
+router.post('/setsavefile', authMiddleware, async(req, res) => {
+    const {fileName, size, data, game} = req.body;
+    const userId = req.user.id;
     
 
     try{
@@ -71,7 +74,7 @@ router.post('/setsavefile', async(req, res) => {
 
 });
 
-router.post('/updatesavefile', async (req, res) =>{
+router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
     const {saveid, size, data,} = req.body;
 
@@ -82,9 +85,6 @@ router.post('/updatesavefile', async (req, res) =>{
         console.log(values);
 
         const result = await pool.query(query,values);
-
-        
-
     
 
         res.status(201).json({message : 'Savefile updated'});

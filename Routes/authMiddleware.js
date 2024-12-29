@@ -8,9 +8,9 @@ const authMiddleware = (req, res,next) =>{
             return res.status(401).json({message:'Authentication required'});
         }
 
-        const decoded = jwt.verify(token.process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.user(decoded);
+        req.user=decoded;
             next();
         
 
