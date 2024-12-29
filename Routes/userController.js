@@ -64,7 +64,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (res,req) =>{
+router.post('/login', async (req,res) =>{
 
     console.log("Entering login function");
 
