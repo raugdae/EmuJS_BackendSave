@@ -35,6 +35,9 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
     const {fileName} = req.body;
     const userId = req.user.userId;
+
+    console.log(fileName);
+    console.log(userId);
     
 
     try{
