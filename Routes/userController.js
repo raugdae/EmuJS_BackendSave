@@ -65,40 +65,43 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req,res) =>{
-
+router.post('/login', async (req,res) => {
     console.log("Entering login function");
     try {
-
-        const { email , password } = req.body;
-
-        const userExist = await pool.query('SELECT * FROM users WHERE email = $1',[email]);
-
-        if (userExist.rows.length === 0){
-            res.status(403).json({messge:'User not found'});
+        const { email, password } = req.body;
+        const userExist = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        
+        if (userExist.rows.length === 0) {
+            return res.status(403).json({message: 'User not found'});
         }
-
+        
         const selectedUser = userExist.rows[0];
-
         console.log(selectedUser);
-
-        const validPassword = await bcrypt.compare(password,selectedUser.password);
-
-        if (!validPassword){
-            res.status(403).json({message:'Wrong credentials'});
+        
+        const validPassword = await bcrypt.compare(password, selectedUser.password);
+        if (!validPassword) {
+            return res.status(403).json({message: 'Wrong credentials'});
         }
-
-        const token = jwt.sign({ userId: selectedUser.id},process.env.JWT_SECRET, {expiresIn:'24h'});
-
-        res.json({message: 'Login successful',token,user:{id:selectedUser.id,email:selectedUser.email}});
+        
+        const token = jwt.sign(
+            { userId: selectedUser.id }, 
+            process.env.JWT_SECRET, 
+            {expiresIn: '24h'}
+        );
+        
+        return res.json({
+            message: 'Login successful',
+            token,
+            user: {
+                id: selectedUser.id,
+                email: selectedUser.email
+            }
+        });
     }
     catch (error) {
         console.error('login error : ', error);
-        res.status(500).json({message : 'Error during login'});
+        return res.status(500).json({message: 'Error during login'});
     }
-    
-    
-
-})
+});
 
 module.exports = router;
