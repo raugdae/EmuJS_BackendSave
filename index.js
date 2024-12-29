@@ -11,9 +11,7 @@ const listeningPort = process.env.API_LISTENING_PORT;
 const app = express();
 
 const corsOptions = {
-   origin: [
-       '*'  // Votre frontend uniquement
-   ],
+   origin:'*',
    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
    credentials: true,
@@ -43,7 +41,7 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 // Public routes
 
 app.get('/api/status',(req,res) => {res.status(200).json({message :"API Online"})});
-app.post('/api/register', userRoutes);
+app.use('/api/register', userRoutes);
 
 
 //protected routes
