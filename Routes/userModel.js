@@ -1,8 +1,8 @@
 const pool = require('../db');
 const bycrpt = require('bcrypt');
 
-class UserModel{
-    static async createUser(email,password){
+
+    async function createUser(email,password){
         try {
             console.log(crea)
             const userExistes = await pool.query(
@@ -27,6 +27,6 @@ class UserModel{
             throw error;
         }
     }
-}
+
 
 module.exports = UserModel;

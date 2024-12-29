@@ -1,9 +1,9 @@
 const UserModel = require('./userModel');
 const jwt = require('jsonwebtoken');
 
-class UserController{
 
-    static async register(req,res){
+
+    async function register(req,res){
         try{
             console.log('registering fucntion entered');
             const {email, password} = req.body;
@@ -24,4 +24,3 @@ class UserController{
             return res.status(400).json({message : 'error while creating user'});
         }
     }
-}
