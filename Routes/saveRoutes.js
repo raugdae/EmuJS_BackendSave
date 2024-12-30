@@ -20,7 +20,7 @@ router.get('/getsavefile', authMiddleware, async(req,res) => {
             console.log("No savefile found");
             return res.status(404).json({message:"No savefile found"});
         }
-        res.status(200).json(result.rows);
+        return res.status(200).json(result.rows);
     }
     catch (err){
         console.error('failed to get data from DB',err.message);
@@ -87,7 +87,7 @@ router.post('/setsavefile', authMiddleware, async(req, res) => {
         const values = [fileName, size, JSON.stringify(data), userId, game];
         const result = await pool.query(query, values);
         
-        res.status(201).json({ message: 'Insert file OK' });
+        return res.status(201).json({ message: 'Insert file OK' });
     }
     catch (err) {
         console.error('Database error:', err);  // Log the full error
@@ -130,10 +130,10 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const result = await pool.query(query,values);
     
 
-        res.status(201).json({message : 'Savefile updated'});
+        return res.status(201).json({message : 'Savefile updated'});
     }
     catch (err){
-        res.status(500).json({message : 'Server error', error:err.message});
+       return res.status(500).json({message : 'Server error', error:err.message});
     }
 
 });
