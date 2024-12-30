@@ -47,7 +47,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
         if (result.rows.length === 0){
             
-           return res.status(404);
+           return res.status(404).json('No Save existing');
         }
         console.log(result);
         return res.status(200).json(result.rows[0]);
