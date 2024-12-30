@@ -16,6 +16,7 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
         if (result.rows.length === 0){
             return res.status(404).json({message : 'User not found'});
         }
+        console.log(result.rows[0]);
         return res.status(201).json(result.rows[0]);
 
 
