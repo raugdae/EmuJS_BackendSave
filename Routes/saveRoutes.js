@@ -36,8 +36,8 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
     const {fileName} = req.query;
     const userId = req.user.userId;
 
-    console.log(fileName);
-    console.log(userId);
+    //console.log(fileName);
+    //console.log(userId);
     
 
     try{
@@ -125,7 +125,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const query = 'UPDATE games SET size = $2, data = $3::jsonb, change_date = CURRENT_TIMESTAMP WHERE id = $1';
         const values = [saveid,size,JSON.stringify(data)];
 
-        console.log(values);
+        //console.log(values);
 
         const result = await pool.query(query,values);
     
@@ -151,7 +151,7 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
 
             return res.status(201).json({message : 'Savefile Deleted'});
         }catch (err){
-            
+
         }
 
 });
