@@ -122,7 +122,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
     const {saveid, size, data,} = req.body;
 
     try{
-        const query = 'UPDATE games SET size = $2, data = $3::jsonb WHERE id = $1';
+        const query = 'UPDATE games SET size = $2, data = $3::jsonb, change_date = CURRENT_TIMESTAMP WHERE id = $1';
         const values = [saveid,size,JSON.stringify(data)];
 
         console.log(values);
