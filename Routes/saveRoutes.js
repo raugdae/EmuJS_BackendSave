@@ -47,7 +47,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
         if (result.rows.length === 0){
             
-           return res.status(404).json('No Save existing');
+            res.status(404);
         }
         console.log(result);
         return res.status(200).json(result.rows[0]);
@@ -133,7 +133,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         return res.status(201).json({message : 'Savefile updated'});
     }
     catch (err){
-       return res.status(500).json({message : 'Server error', error:err.message});
+        res.status(500).json({message : 'Server error', error:err.message});
     }
 
 });
