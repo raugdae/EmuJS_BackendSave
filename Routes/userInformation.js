@@ -77,7 +77,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 });
 
     router.post('/userdeletesave', authMiddleware , async(req,res) =>{
-        const saveId = req.saveId;
+        const {saveId} = req.body;
         const userId = req.user.userId;
     
         try {
@@ -96,6 +96,23 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             
         }
         catch(err){
+            return res.status(500).json({Message : 'Internal Error', Error:err});
+        }
+    });
+    router.post('/updateprofile', authMiddleware, async(req,res) => {
+
+        const {profileText} = req.body;
+        const userId = req.user.userId;
+
+        try{
+            const query = 'UPDATE users SET profile = $1 WHERE id = $2 RETURN nickname, profile;'
+            const value = [profileText,userId];
+
+            const result = await pool.query(query,value);
+
+            return res.status(200).json(result);
+        }
+        catch (err){
             return res.status(500).json({Message : 'Internal Error', Error:err});
         }
     });
