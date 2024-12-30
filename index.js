@@ -5,6 +5,7 @@ const pool = require('./db');
 
 const saveRoutes = require('./Routes/saveRoutes');
 const userRoutes = require('./Routes/userController');
+const userInformation = require('./Routes/userInformation');
 const authMiddleware = require('./Routes/authMiddleware');
 const listeningPort = process.env.API_LISTENING_PORT;
 
@@ -47,6 +48,7 @@ app.use('/api', userRoutes);
 //protected routes
 
 app.use('/api/savemanagement', saveRoutes);
+app.use('/api/user', userInformation);
 
 
 app.listen(listeningPort,() => console.log('API running on port : '+listeningPort))
