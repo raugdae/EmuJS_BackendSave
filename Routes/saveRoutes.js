@@ -1,42 +1,24 @@
 const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
-const authenticateToken = require('./authMiddleware');
+const authMiddleware = require('./authMiddleware');
 
- /*// Add this before your routes
-router.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});*/
 
-//router.use(authenticateToken);
+router.get('/getsavefile', authMiddleware, async(req,res) => {
 
-// Your existing routes below
+    const {gamefile} = req.query;
+    const userId = req.user.userId;
 
-/*router.get('/api', async(req,res) =>{
-    res.status(200).json({messsage : 'API savemanagement online',
-        authenticateTUser : req.user.id
-    });
-});*/
-
-router.get('/getsavefile', async(req,res) => {
-
+    console.log(userId);
     
-    const {gamefile,userId} = req.query;
-    
-
-    console.log("Game : $1 UserID : $2",gamefile,userId);
-
     try{
-        const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2 LIMIT 1";
+        const query = "SELECT file_name,size,data FROM games WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1) AND fk_user =$2";
         const value = [gamefile,userId];
         const result = await pool.query(query,value);
 
         if (result.rows.length === 0){
             console.log("No savefile found");
-            return res.status(404);
+            return res.status(404).json({message:"No savefile found"});
         }
         res.status(200).json(result.rows);
     }
@@ -47,12 +29,16 @@ router.get('/getsavefile', async(req,res) => {
 });
 
 
-router.get('/savefileexists', async(req,res) => {
+router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
-    const {fileName,userId} = req.body;
-    
+    console.log('Entering savefilecheck API');
 
+    const {fileName} = req.query;
+    const userId = req.user.userId;
+
+    console.log(fileName);
     console.log(userId);
+    
 
     try{
         const query = 'SELECT id FROM games WHERE fk_user = $1 AND fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $2)';
@@ -65,7 +51,7 @@ router.get('/savefileexists', async(req,res) => {
         }
 
         res.status(200).json(result.rows);
-        //console.log(result.rows[0]);
+        console.log(result);
         
 
     }catch (err){
@@ -75,24 +61,63 @@ router.get('/savefileexists', async(req,res) => {
 });
 
 
-router.post('/setsavefile', async(req, res) => {
-    const {fileName, size, data, game, userId} = req.body;
-    
+router.post('/setsavefile', authMiddleware, async(req, res) => {
+    const {fileName, size, data, game} = req.body;
+    const userId = req.user.userId;
 
-    try{
-        const query = 'INSERT INTO games (file_name, size,data,fk_user,fk_gamelist) VALUES ($1, $2,$3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) RETURNING *';
-        const values = [fileName, size, JSON.stringify(data),userId,game];
-        const result = await pool.query(query,values);
-
-        res.status(201).json({message : 'Insert file OK'});
+    // Validate input
+    if (!fileName || !size || !data || !game) {
+        return res.status(400).json({ message: 'Missing required fields' });
     }
-    catch (err){
-        res.status(500).json({message : 'Server error', error:err.message});
-    }
+   
+    try {
+        // First check if the game exists
+        const checkGameQuery = 'SELECT id FROM gamelist WHERE filename = $1';
+        const gameCheck = await pool.query(checkGameQuery, [game]);
+        
+        if (gameCheck.rows.length === 0) {
+            return res.status(404).json({ message: 'Game not found in gamelist' });
+        }
 
+        const query = `
+            INSERT INTO games (file_name, size, data, fk_user, fk_gamelist) 
+            VALUES ($1, $2, $3::jsonb, $4, (SELECT id FROM gamelist WHERE filename = $5)) 
+            RETURNING *`;
+        
+        const values = [fileName, size, JSON.stringify(data), userId, game];
+        const result = await pool.query(query, values);
+        
+        res.status(201).json({ message: 'Insert file OK' });
+    }
+    catch (err) {
+        console.error('Database error:', err);  // Log the full error
+        
+        // Send more specific error messages based on the error type
+        if (err.code === '23505') {  // Unique violation
+            return res.status(409).json({ 
+                message: 'Save file already exists',
+                error: err.message 
+            });
+        } else if (err.code === '23503') {  // Foreign key violation
+            return res.status(400).json({ 
+                message: 'Invalid game or user reference',
+                error: err.message 
+            });
+        } else if (err.code === '22P02') {  // Invalid text representation
+            return res.status(400).json({ 
+                message: 'Invalid data format',
+                error: err.message 
+            });
+        }
+        
+        res.status(500).json({ 
+            message: 'Server error', 
+            error: err.message 
+        });
+    }
 });
 
-router.post('/updatesavefile', async (req, res) =>{
+router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
     const {saveid, size, data,} = req.body;
 
@@ -103,9 +128,6 @@ router.post('/updatesavefile', async (req, res) =>{
         console.log(values);
 
         const result = await pool.query(query,values);
-
-        
-
     
 
         res.status(201).json({message : 'Savefile updated'});
