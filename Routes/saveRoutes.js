@@ -151,6 +151,7 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
 
             return res.status(201).json({message : 'Savefile Deleted'});
         }catch (err){
+            return res.status(500).json({message : "Server Failure",Error: err});
 
         }
 
