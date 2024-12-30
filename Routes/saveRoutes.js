@@ -138,5 +138,23 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
 });
 
+router.post('/deletesave', authMiddleware, async(req,res) =>{
+
+    const {saveId} = req.body;
+    const userId = req.user.userId;
+
+        try{
+            const query = 'DELETE FROM games WHERE id = $1 AND fk_user = $2;';
+            const values = [saveId,userId]
+
+            const result = await pool.query(query,values);
+
+            return res.status(201).json({message : 'Savefile Deleted'});
+        }catch (err){
+            
+        }
+
+});
+
 
 module.exports = router;
