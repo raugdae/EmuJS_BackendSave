@@ -53,5 +53,29 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
 
 
 })
+router.get('/usersavelist', authMiddleware , async(req,res) =>{
+    const userId = req.user.userId;
+
+    try {
+        const query = 'select gamelist.name AS game FROM gamelist LEFT JOIN games ON gamelist.id = games.fk_gamelist WHERE games.fk_user = $1 ;'
+        const value = [userId];
+
+        const result = await pool.query(query,value);
+
+        if (result.rows.length === 0){
+            return res.status(404).json({message : 'User not found'});
+        }
+        console.log(result.rows);
+        return res.status(200).json(result.rows[0]);
+
+
+        
+    }
+    catch(err){
+        return res.status(500).json({Message : 'Internal Error', Error:err});
+    }
+
+
+})
 
 module.exports = router;
