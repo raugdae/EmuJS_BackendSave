@@ -57,7 +57,10 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
 
     try {
-        const query = 'select gamelist.name AS game FROM gamelist LEFT JOIN games ON gamelist.id = games.fk_gamelist WHERE games.fk_user = $1 ;'
+        const query = 'select gamelist.name AS game, games.id, device.name AS Console, games.creation_date, games.change_date FROM gamelist\
+LEFT JOIN games ON gamelist.id = games.fk_gamelist \
+LEFT JOIN device ON gamelist.fk_device = device.id \
+WHERE games.fk_user = $1;'
         const value = [userId];
 
         const result = await pool.query(query,value);
@@ -74,8 +77,33 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     catch(err){
         return res.status(500).json({Message : 'Internal Error', Error:err});
     }
+});
+
+    router.get('/userdeletesave', authMiddleware , async(req,res) =>{
+        const saveId = req.saveId;
+        const userId = req.user.userId;
+    
+        try {
+            const query = 'DELETE FROM games WHERE id = $1 AND fk_user=$2'
+            const value = [saveId,userId];
+    
+            const result = await pool.query(query,value);
+    
+            if (result.rows.length === 0){
+                return res.status(404).json({message : 'User not found'});
+            }
+            console.log(result.rows);
+            return res.status(200).json(result.rows[0]);
+    
+    
+            
+        }
+        catch(err){
+            return res.status(500).json({Message : 'Internal Error', Error:err});
+        }
+    });
 
 
-})
+
 
 module.exports = router;
