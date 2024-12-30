@@ -47,11 +47,11 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
 
         if (result.rows.length === 0){
             
-            res.status(404);
+           return res.status(404);
         }
-
-        res.status(200).json(result.rows);
         console.log(result);
+        return res.status(200).json(result.rows);
+        
         
 
     }catch (err){
