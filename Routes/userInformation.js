@@ -76,7 +76,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     }
 });
 
-    router.post('/userdeletesave', authMiddleware , async(req,res) =>{
+    router.delete('/userdeletesave', authMiddleware , async(req,res) =>{
         const saveId = req.body.id;
         const userId = req.user.userId;
     
