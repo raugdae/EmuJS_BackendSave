@@ -70,6 +70,8 @@ router.post('/login', async (req,res) => {
     try {
         const { email, password } = req.body;
         const userExist = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        const updateLoginDate = 'UPDATE users SET lastlogin = CURRENT_TIMESTAMP WHERE id = $1';
         
         if (userExist.rows.length === 0) {
             return res.status(403).json({message: 'User not found'});
@@ -81,6 +83,9 @@ router.post('/login', async (req,res) => {
         const validPassword = await bcrypt.compare(password, selectedUser.password);
         if (!validPassword) {
             return res.status(403).json({message: 'Wrong credentials'});
+        }
+        else{
+            pool.query(updateLoginDate,[selectedUser.id]);
         }
         
         const token = jwt.sign(
