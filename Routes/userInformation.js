@@ -57,7 +57,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
 
     try {
-        const query = 'select gamelist.name AS game, games.id, device.name AS Console, games.creation_date, games.change_date FROM gamelist LEFT JOIN games ON gamelist.id = games.fk_gamelist LEFT JOIN device ON gamelist.fk_device = device.id WHERE games.fk_user = $1;'
+        const query = 'select gamelist.name AS game, games.id, device.name AS Console, games.creation_date, games.change_date FROM gamelist LEFT JOIN games ON gamelist.id = games.fk_gamelist LEFT JOIN device ON gamelist.fk_device = device.id WHERE games.fk_user = $1 ORDER BY games.change_date DESC;'
         const value = [userId];
 
         const result = await pool.query(query,value);
