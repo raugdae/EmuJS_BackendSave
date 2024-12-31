@@ -53,6 +53,8 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
 
         const result = await pool.query(query,value);
 
+        console.log(result);
+
         if (result.rows.length === 0){
             return res.status(404).json({message : 'User not found'});
         }
