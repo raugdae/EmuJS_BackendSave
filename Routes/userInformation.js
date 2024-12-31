@@ -78,7 +78,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const result = await pool.query(query,value);
 
         if (result.rows.length === 0){
-            return res.status(204).json({message : 'No save file found'});
+            return res.status(200).json({message : 'No save file found'});
         }
         console.log(result.rows);
         return res.status(200).json(result.rows);
