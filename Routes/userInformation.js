@@ -129,7 +129,27 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             return res.status(500).json({Message : 'Internal Error', Error:err});
         }
     });
+    router.get('/getprofilepic'),authMiddleware,async(req,res) =>{
+        const userId = req.user.userId;
 
+        try {
+            const query = 'SELECT picpath FROM users WHERE id = $1;';
+            const value = [userId];
+
+            const result = await pool.query(query,value);
+
+            if (result.rows.length === 0){
+                return res.status(204).json();
+            }
+            
+            return res.status(200).json(result.rows[0]);
+
+
+        }catch {
+            return res.status(500).json({Message : 'Internal error'});
+        }
+
+    };
 
 
 
