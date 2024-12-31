@@ -194,7 +194,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     router.post('/teststartplaying', async (req,res) =>{
 
         //const userId = req.user.userId;
-        //const [gameName] = req.body;
+        const {gameName, userId} = req.body;
 
         try {
 
