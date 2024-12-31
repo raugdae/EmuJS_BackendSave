@@ -41,15 +41,13 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
         const haveSavefile = 'SELECT * FROM games WHERE fk_user = $1;'
         const saveFileList = await pool.query(haveSavefile,value);
 
-        console.log(saveFileList+" "+saveFileList.rows.length);
 
         if (saveFileList.rows.length === 0)
         {
-            console.log ('no savefile');
             userdata = 'SELECT users.nickname, users.email, users.creation_date, users.profile FROM users WHERE users.id = $1;';
             
         }else{
-            console.log('with savefile');
+
             userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.nickname,users.email,users.profile) ;'
         }
 
@@ -60,9 +58,7 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
         if (result.rows.length === 0){
             return res.status(404).json({message : 'User not found'});
         }
-        console.log(result.rows);
 
-        console.log('returning 200');
         return res.status(200).json(result.rows[0]);
         
     }
