@@ -36,6 +36,7 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
 
         const value = [userId];
 
+
         const haveSavefile = 'SELECT * FROM games WHERE fk_user = $1;'
         const saveFileList = await pool.query(haveSavefile,value);
 
@@ -43,8 +44,10 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
 
         if (saveFileList.rows.length === 0)
         {
+            console.log ('no savefile');
             const query = 'SELECT users.nickname, users.email, users.creation_date, users.profile FROM users WHERE users.id = $1;';
         }else{
+            console.log('with savefile');
             const query = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.nickname,users.email,users.profile) ;'
         }
 
