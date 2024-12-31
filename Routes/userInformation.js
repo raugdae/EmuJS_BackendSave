@@ -89,7 +89,9 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             const value = [saveId];
     
             const result = await pool.query(query,value);
-    
+            
+            console.log(result.rows.length);
+
             if (result.rows.length === 0){
                 return res.status(404).json({message : 'Save not found'});
             }
