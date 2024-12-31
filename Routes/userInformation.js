@@ -117,6 +117,46 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         }
     });
 
+    router.post('/startplaying', authMiddleware, async (req,res) =>{
+
+        const userId = req.user.userId;
+        const [gameName] = req.body;
+
+        try {
+
+            const query = 'INSERT INTO playinghistory (fk_user, fk_game) VALUES ($1, (SELECT id FROM gamelist WHERE filename = $2)) RETURNING id;'
+            const values = [userId,gameName];
+
+            const result = await pool.query(query,values);
+
+            return res.status(201).json();
+
+        }
+        catch (err){
+            return res.status(500).json({Message : 'Internal Error',Error:err});
+        }
+
+    });
+    router.post('/stopplaying', authMiddleware, async (req,res) =>{
+
+        const userId = req.user.userId;
+        const [historyId] = req.body;
+
+        try {
+
+            const query = 'UPDATE playinghistory SET stoptime = CURRENT_TIMESTAMP WHERE id = $1 AND fk_user = $2;';
+            const values = [historyId,userId];
+
+            const result = await pool.query(query,values);
+
+            return res.status(200).json({message : 'Record Updated'});
+
+        }
+        catch (err){
+            return res.status(500).json({Message : 'Internal Error',Error:err});
+        }
+
+    });
 
 
 
