@@ -85,8 +85,8 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             console.log(saveId);
             console.log (userId);
 
-            const query = 'DELETE FROM games WHERE id = $1 AND fk_user=$2'
-            const value = [saveId,userId];
+            const query = 'DELETE FROM games WHERE id = $1'
+            const value = [saveId];
     
             const result = await pool.query(query,value);
     
