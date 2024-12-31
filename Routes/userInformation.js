@@ -83,6 +83,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         try {
             console.log("Deletsave HTML Post body")
             console.log(req.body);
+            console.log (userId);
 
             const query = 'DELETE FROM games WHERE id = $1 AND fk_user=$2'
             const value = [saveId,userId];
