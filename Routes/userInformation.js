@@ -39,6 +39,8 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
         const haveSavefile = 'SELECT * FROM games WHERE fk_user = $1;'
         const saveFileList = await pool.query(haveSavefile,value);
 
+        console.log(saveFileList+" "+saveFileList.rows.length);
+
         if (saveFileList.rows.length === 0)
         {
             const query = 'SELECT users.nickname, users.email, users.creation_date, users.profile FROM users WHERE users.id = $1;';
