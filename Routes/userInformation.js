@@ -82,7 +82,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     
         try {
             console.log("Deletsave HTML Post body")
-            console.log(req.body);
+            console.log(saveId);
             console.log (userId);
 
             const query = 'DELETE FROM games WHERE id = $1 AND fk_user=$2'
@@ -91,7 +91,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             const result = await pool.query(query,value);
     
             if (result.rows.length === 0){
-                return res.status(404).json({message : 'User not found'});
+                return res.status(404).json({message : 'Save not found'});
             }
             console.log(result.rows);
             return res.status(200).json(result.rows);
