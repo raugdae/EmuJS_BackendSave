@@ -33,7 +33,7 @@ router.get('/userprofileextended', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
 
     try {
-        const query = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile, users.lastlogin FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.nickname,users.email,users.profile) ;'
+        const query = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.nickname,users.email,users.profile) ;'
         const value = [userId];
 
         const result = await pool.query(query,value);
