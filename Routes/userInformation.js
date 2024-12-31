@@ -191,6 +191,26 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
+    router.post('/teststartplaying', async (req,res) =>{
+
+        //const userId = req.user.userId;
+        //const [gameName] = req.body;
+
+        try {
+
+            const query = 'INSERT INTO playinghistory (fk_user, fk_game) VALUES ($1, (SELECT id FROM gamelist WHERE filename = $2)) RETURNING id;'
+            const values = [userId,gameName];
+
+            const result = await pool.query(query,values);
+
+            return res.status(201).json();
+
+        }
+        catch (err){
+            return res.status(500).json({Message : 'Internal Error',Error:err});
+        }
+
+    });
 
 
 module.exports = router;
