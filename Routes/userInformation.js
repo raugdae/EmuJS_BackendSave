@@ -88,7 +88,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     
             const result = await pool.query(query,value);
             
-            return res.status(200).json(message , 'Save File delete... ->x.x<-');
+            return res.json(message , 'Save File delete... ->x.x<-');
     
     
             
