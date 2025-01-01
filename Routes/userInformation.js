@@ -199,26 +199,32 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
-    router.post('/teststartplaying', async (req,res) =>{
+    router.get('/playedtime'), authMiddleware, async (req,res) =>{
 
-        //const userId = req.user.userId;
-        const {gameName, userId} = req.body;
+        const userId = req.user.userId;
 
         try {
-
-            const query = 'INSERT INTO playinghistory (fk_user, fk_game) VALUES ($1, (SELECT id FROM gamelist WHERE filename = $2)) RETURNING id;'
-            const values = [userId,gameName];
+            const query = `SELECT users.nickname,gamelist.name, SUM(playinghistory.stoptime - playinghistory.starttime) AS playedtime
+                            FROM playinghistory
+                            LEFT JOIN users ON playinghistory.fk_user = users.id
+                            LEFT JOIN gamelist ON playinghistory.fk_game = gamelist.id
+                            WHERE user.id = $1
+                            GROUP BY users.nickname, gamelist.name
+                            ORDER BY playedtime`;
+            const values = [userId];
 
             const result = await pool.query(query,values);
 
-            return res.status(200).json();
-
+            if (result.rows.length === 0){
+                return res.status(204).json();
+            }
+            return res.status(201).json(result.rows);
         }
-        catch (err){
-            return res.status(500).json({Message : 'Internal Error',Error:err});
+        catch (error) {
+            return res.status(500).json({Message : 'Internal Error', error : error})
         }
 
-    });
+    }
 
 
 module.exports = router;
