@@ -43,6 +43,7 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
 
 
 })
+
 router.get('/usersavelist', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
 
@@ -201,7 +202,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             return res.status(500).json({Message : 'Internal Error', error : error})
         }
 
-    }
+    };
 
 
 module.exports = router;
