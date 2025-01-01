@@ -175,7 +175,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
-    router.get('/playedtime', authMiddleware, async (req,res) =>{
+    router.get('/getplayedtime', authMiddleware, async (req,res) =>{
 
         const userId = req.user.userId;
 
