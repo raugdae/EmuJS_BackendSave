@@ -23,7 +23,7 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
             
         }else{
 
-            userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile,users.creation_date, FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.nickname,users.email,users.profile) ;'
+            userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.nickname,users.email,users.profile) ;'
         }
 
         const result = await pool.query(userdata,value);
@@ -38,12 +38,12 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
         
     }
     catch(err){
+        console.log(err);
         return res.status(500).json({Message : 'Internal Error', Error:err});
     }
 
 
 })
-
 router.get('/usersavelist', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
 
@@ -175,7 +175,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
-    router.get('/getplayedtime', authMiddleware, async (req,res) =>{
+    router.get('/playedtime', authMiddleware, async (req,res) =>{
 
         const userId = req.user.userId;
 
@@ -199,10 +199,10 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             return res.status(201).json(result.rows);
         }
         catch (error) {
+            console.log(error);
             return res.status(500).json({Message : 'Internal Error', error : error})
         }
 
     });
-
 
 module.exports = router;
