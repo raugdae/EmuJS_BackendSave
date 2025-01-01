@@ -4,7 +4,7 @@ const pool = require('./../db');
 const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
-router.get('/userprofileextended', authMiddleware , async(req,res) =>{
+router.get('/userprofile', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
 
     try {
