@@ -204,7 +204,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const userId = req.user.userId;
 
         try {
-            const query = `SELECT users.nickname,gamelist.name, SUM(playinghistory.stoptime - playinghistory.starttime) AS playedtime
+            const query = `SELECT gamelist.name AS gamename, SUM(playinghistory.stoptime - playinghistory.starttime) AS playedtime
                             FROM playinghistory
                             LEFT JOIN users ON playinghistory.fk_user = users.id
                             LEFT JOIN gamelist ON playinghistory.fk_game = gamelist.id
@@ -214,6 +214,8 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             const values = [userId];
 
             const result = await pool.query(query,values);
+
+            console.log(result.rows);
 
             if (result.rows.length === 0){
                 return res.status(204).json();
