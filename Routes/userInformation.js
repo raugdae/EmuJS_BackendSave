@@ -164,9 +164,8 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             const result = await pool.query(query,values);
             
-            console.log("return from timestamp : ",result);
 
-            return res.status(201).json();
+            return res.status(201).json(result.rows[0]);
 
         }
         catch (err){
@@ -211,7 +210,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             const result = await pool.query(query,values);
 
-            return res.status(201).json();
+            return res.status(200).json();
 
         }
         catch (err){
