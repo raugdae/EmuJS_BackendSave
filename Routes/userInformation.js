@@ -164,6 +164,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             const result = await pool.query(query,values);
             
+            console.log(result.rows[0]);
 
             return res.status(201).json(result.rows[0]);
 
