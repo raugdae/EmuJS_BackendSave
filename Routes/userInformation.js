@@ -155,6 +155,8 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const userId = req.user.userId;
         const {gameName} = req.body;
 
+        console.log ("enter timestamp", userId, gameName);
+
         try {
 
             const query = 'INSERT INTO playinghistory (fk_user, fk_game) VALUES ($1, (SELECT id FROM gamelist WHERE filename = $2)) RETURNING id;'
@@ -172,8 +174,12 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     });
     router.post('/stopplaying', authMiddleware, async (req,res) =>{
 
+        
+
         const userId = req.user.userId;
         const [historyId] = req.body;
+
+        console.log("enter stop time", userId, historyId;
 
         try {
 
