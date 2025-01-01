@@ -186,7 +186,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
                             LEFT JOIN gamelist ON playinghistory.fk_game = gamelist.id
                             WHERE users.id = $1
                             GROUP BY users.nickname, gamelist.name
-                            ORDER BY playedtime`;
+                            ORDER BY playedtime desc`;
             const values = [userId];
 
             const result = await pool.query(query,values);
