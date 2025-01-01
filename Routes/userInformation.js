@@ -179,7 +179,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const userId = req.user.userId;
         const [historyId] = req.body;
 
-        console.log("enter stop time", userId, historyId;
+        console.log("enter stop time", userId, historyId);
 
         try {
 
