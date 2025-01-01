@@ -163,6 +163,8 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             const values = [userId,gameName];
 
             const result = await pool.query(query,values);
+            
+            console.log("return from timestamp : ",result);
 
             return res.status(201).json();
 
