@@ -136,7 +136,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         
         const resultGameId = await pool.query(queryGameId,queryGameIdValues);
-        const gameId = resultGameId.rows[0];
+        const gameId = resultGameId.rows[0].gameId;
         
         console.log('id user');
         const queryUserId = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
@@ -146,10 +146,10 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const userId = resultUserId.rows[0];
        
         console.log('sending to function');
-        console.log({gameId});
+        console.log(gameId);
 
         const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
-        const selectAchivementQueryValues = [{gameId}]
+        const selectAchivementQueryValues = [gameId]
 
 
         /*
