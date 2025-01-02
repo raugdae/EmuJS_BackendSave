@@ -143,7 +143,7 @@ router.post('/resetpassword', async (req,res) =>{
 
         await pool.query('UPDATE users SET token_reset = $1, token_reset_expiration = $2 WHERE email = $3',[resetToken,tokenExpiration,userMail]);
 
-        const resetLink = `${process.env.API_ADDRESS}:${process.env.API_LISTENING_PORT}/updatepassword?token=${resetToken}`;
+        const resetLink = `${process.env.API_ADDRESS}:${process.env.WEB_PORT}/update-password?token=${resetToken}`;
 
         const mailContent = {
             from: `"RaugEmu No-Reply" ${process.env.MAIL_USER}`,
