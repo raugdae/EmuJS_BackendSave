@@ -152,6 +152,8 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
         const selectAchivementQueryValues = [gameId]
 
+        const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
+
 
         /*
         //Fetching achievement from game
