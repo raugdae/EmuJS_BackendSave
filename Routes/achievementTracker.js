@@ -9,7 +9,7 @@ async function updateAchievement(gameId,userId,data){
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1;`;
     const {selectAchievementValues} = gameId;
 
-    console.log('sending query');
+    console.log('sending query : ', selectAchievementValues);
     const achievementList = await pool.query(selectAchievementQuery,selectAchievementValues);
 
     console.log('query returned');
