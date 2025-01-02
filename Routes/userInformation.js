@@ -239,6 +239,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     });
 
     router.post('/uploadavatar',authMiddleware,upload.single('image'), async(req,res) =>{
+        console.log("dans ton cul");
         return res.status(200).json({message:'File uploaded'});
     
     });
