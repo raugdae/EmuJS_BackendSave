@@ -1,10 +1,12 @@
 const pool = require('./../db');
 
-async function updateAchievement(req,res){
-
-    const {userId,gameId,data} = req.body;
+async function updateAchievement(parameters){
 
     console.log('entering achievement update');
+    
+    const {userId,gameId,data} = parameters;
+
+    
     //Fetching achievement from game
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = (SELECT id FROM gamelist WHERE filename LIKE $1)`;
     const selectAchievementValues = [gameId];
