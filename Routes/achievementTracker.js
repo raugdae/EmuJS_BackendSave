@@ -2,7 +2,7 @@ const pool = require('./../db');
 
 async function updateAchievement(gameId,userId,data){
     console.log('entering achievement update');
-    const {selectAchievementValues} = gameId;
+    const selectAchievementValues = gameId;
     try {
     
     console.log(selectAchievementValues);
