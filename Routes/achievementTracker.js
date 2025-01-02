@@ -5,7 +5,7 @@ async function updateAchievement(gameId,userId,data){
     const {selectAchievementValues} = gameId;
     try {
     
-    
+    console.log(selectAchievementValues);
     //Fetching achievement from game
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1;`;
     
