@@ -159,6 +159,8 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         resultAchievementQuery.rows.forEach( async achievement => {
             let saveMemoryValue = data[achievement.memorylocation];
 
+            console.log(saveMemoryValue);
+
             if (saveMemoryValue === achievement.waitedvalue){
                 recordAchievementValues = [userId,achievement.id];
 
