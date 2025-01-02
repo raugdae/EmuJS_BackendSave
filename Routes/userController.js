@@ -197,7 +197,7 @@ router.post('/updatepassword', async(req,res) => {
         console.log('Saving new password');
         const passchanged = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [hashedPassword,userMail]);
 
-        res.status(200).json(message,'Password updated successfully');
+        return res.status(200).json({message:'Password updated successfully'});
 
 
     }
