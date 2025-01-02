@@ -147,7 +147,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         
         console.log('sending to function');
         const achievementParameter = JSON.stringify({userId,gameId,data})
-        console.log(JSON.stringify({userId,gameId}));
+        console.log(userId,gameId);
         const achivementResult = await achievementTracker(achievementParameter)
 
 
