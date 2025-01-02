@@ -121,6 +121,7 @@ router.post('/setsavefile', authMiddleware, async(req, res) => {
 router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
     const {saveid, size, data,} = req.body;
+    const userId = req.user.userId;
 
     try{
         const query = 'UPDATE games SET size = $2, data = $3::jsonb, change_date = CURRENT_TIMESTAMP WHERE id = $1';
@@ -137,23 +138,23 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const resultGameId = await pool.query(queryGameId,queryGameIdValues);
         const gameId = resultGameId.rows[0].gameid;
         
-        const queryUserId = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
-        const queryUserIdValues = [saveid];
+        //const queryUserId = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
+        //const queryUserIdValues = [saveid];
 
-        const resultUserId = await pool.query(queryUserId,queryGameIdValues);
-        const userId = resultUserId.rows[0].userid;
+        //const resultUserId = await pool.query(queryUserId,queryGameIdValues);
+        //const userId = resultUserId.rows[0].userid;
        
         console.log('sending to function');
         console.log(gameId);
         console.log(userId);
 
         // achievement check
-        const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1 AND NOT fk_user = $2 ';
-        const selectAchivementQueryValues = [gameId,userId];
+        const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1 ';
+        const selectAchivementQueryValues = [gameId];
 
         console.log(selectAchivementQueryValues);
 
-        const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2);'
+        const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2) ON CONFLICT (fk_user, fk_achievement) DO NOTHING;'
         let recordAchievementValues;
 
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
