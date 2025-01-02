@@ -149,7 +149,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log(gameId);
 
 
-
+        /*
         //Fetching achievement from game
         const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
         const achievementList = await client.query(selectAchievementQuery,{gameId});
@@ -161,7 +161,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         
         //const achivementResult = await updateAchievement(gameId,userId,data);
-
+*/
 
         return res.status(201).json({message : 'Savefile updated'});
     }
