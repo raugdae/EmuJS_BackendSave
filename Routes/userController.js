@@ -177,11 +177,14 @@ router.post('/updatepassword', async(req,res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const {userMail, cryptedToken} = decoded;
 
+        
+        /*
         console.log('cul');
         console.log('checking user');
         console.log('userMail : ',userMail);
         console.log('Token :', cryptedToken);
         console.log('codedToken :', token);
+        */
 
         const result = await pool.query(`SELECT * FROM users 
                                             WHERE email = $1 AND token_reset = $2 AND token_reset_expiration > NOW()`,

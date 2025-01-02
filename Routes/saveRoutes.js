@@ -49,7 +49,7 @@ router.get('/savefileexists', authMiddleware ,async(req,res) => {
             
             res.status(404);
         }
-        console.log(result);
+        //console.log(result);
         return res.status(200).json(result.rows[0]);
         
         
