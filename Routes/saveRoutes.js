@@ -136,7 +136,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         
         const resultGameId = await pool.query(queryGameId,queryGameIdValues);
-        const gameId = resultGameId.rows[0];
+        const gameId = resultGameId.rows[0].gameid;
         //const {gameId} = gameIdDB;
         
         console.log('id user');
