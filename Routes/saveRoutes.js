@@ -2,6 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 const authMiddleware = require('./authMiddleware');
+const achievementTracker = require('./achievementTracker');
 
 
 router.get('/getsavefile', authMiddleware, async(req,res) => {
@@ -128,7 +129,24 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         //console.log(values);
 
         const result = await pool.query(query,values);
-    
+
+        const queryGameId = 'SELECT id from gamelist WHERE id = (SELECT fk_gamelist FROM games WHERE id = $1';
+        const queryGameIdValues = [saveid];
+
+        const resultGameId = await pool.query(queryGameId,queryGameIdValues);
+        const gameId = resultGameId.rows[0];
+        
+        const queryUserId = 'SELECT id from users WHERE id = (SELECT fk_user FROM games WHERE id = $1';
+        const queryUserIdValues = [saveid];
+
+        const resultUserId = await pool.query(queryGameId,queryGameIdValues);
+        const userId = resultGameId.rows[0];
+        
+
+        const achievementParameter = JSON.stringify(userId,gameId,data)
+        
+        const achivementResult = await achievementTracker(achievementParameter)
+
 
         return res.status(201).json({message : 'Savefile updated'});
     }
