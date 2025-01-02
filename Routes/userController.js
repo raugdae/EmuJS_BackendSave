@@ -128,7 +128,7 @@ router.post('/resetpassword', async (req,res) =>{
     try{
 
 
-        const resetToken = JsonWebTokenError.sign(
+        const resetToken = jwt.sign(
             {
                 userMail: userMail,
                 type:'password_reset'
