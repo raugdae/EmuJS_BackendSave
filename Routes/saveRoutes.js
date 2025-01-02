@@ -148,8 +148,10 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log(userId);
 
         // achievement check
-        const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
-        const selectAchivementQueryValues = [gameId]
+        const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1 AND NOT fk_user = $2 ';
+        const selectAchivementQueryValues = [gameId,userId];
+
+        console.log(selectAchivementQueryValues);
 
         const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2);'
         let recordAchievementValues;
