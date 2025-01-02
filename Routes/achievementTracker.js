@@ -1,4 +1,17 @@
-const pool = require('./../db');
+const {Pool} = require('pg');
+
+const temppool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database:process.env.DB_NAME,
+    password: process.env.DB_PASS,
+    port:5432,
+    idleTimeoutMillis:30000,
+
+    ssl: {
+        rejectUnauthorized: false 
+      }
+});
 
 async function updateAchievement({gameid},userId,data){
     console.log('entering achievement update');
@@ -9,7 +22,7 @@ async function updateAchievement({gameid},userId,data){
     console.log(gameid);
     //Fetching achievement from game
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
-    const achievementList = await pool.query(selectAchievementQuery,gameId);
+    const achievementList = await temppool.query(selectAchievementQuery,gameId);
 
     console.log('query returned');
     const listJson = achievementList.rows;
