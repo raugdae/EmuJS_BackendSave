@@ -142,7 +142,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const queryUserId = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
         const queryUserIdValues = [saveid];
 
-        const resultUserId = await pool.query(queryGameId,queryGameIdValues);
+        const resultUserId = await pool.query(queryUserId,queryGameIdValues);
         const userId = resultUserId.rows[0];
         
         console.log('sending to function');
