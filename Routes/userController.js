@@ -127,22 +127,37 @@ router.post('/resetpassword', async (req,res) =>{
 
     try{
 
+
+        const resetToken = JsonWebTokenError.sign(
+            {
+                userMail: userMail,
+                type:'password_reset'
+            },
+            process.env.JWT_SECRET,
+            {expiresIn : '1h'}
+        );
+
+        const resetLink = `${process.env.API_ADDRESS}:${process.env.API_LISTENING_PORT}/updatepassword?token=${resetToken}`;
+
         const mailContent = {
             from: `"RaugEmu No-Reply" ${process.env.MAIL_USER}`,
             to : userMail,
             subject : "Reset your password to RaugEmu",
             text : `Follow this link to reset your password`,
-            html: `<p> follow this link to reset your password</p>`
+            html: `<p> follow this link to reset your password</p>< /br> 
+            <a href="${resetLink}>Reset my password</a></br>
+            <p> This link will expire in 1 hour!</p>`
         }
 
-        console.log(mailContent);
-
+        
         const mailStatus = await transporter.sendMail(mailContent);
         console.log("Mail sent successfully"+mailStatus.messageId);
+        res.json({message : 'Reset instruction sent by mail'});
 
     }
     catch(err){
         console.log("Error while sending mail", err);
+        res.status(500).json({message : 'Error on password reset'});
     }
 
 });
