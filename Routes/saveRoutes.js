@@ -150,7 +150,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log(gameId);
         console.log(userId);
 
-        const cul = updateAchievement(pool,gameId,userId,data);
+        const cul = await updateAchievement(pool,gameId,userId,data);
 
         /*
         const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
@@ -192,9 +192,6 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
 async function updateAchievement(pool,gameId,userId,data){
     console.log('entering achievement update');
 
-    const client = await pool.connect();
-
-       //const {selectAchievementValues} = gameId;
     try {
     
     //Fetching achievement from game
