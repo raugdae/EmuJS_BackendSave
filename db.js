@@ -14,4 +14,17 @@ const pool = new Pool({
       }
 });
 
+// Ajouter plus de logging
+pool.on('connect', () => {
+  console.log('Database connection established');
+});
+
+pool.on('acquire', () => {
+  console.log('Client acquired from pool');
+});
+
+pool.on('error', (err) => {
+  console.error('Pool error:', err);
+});
+
 module.exports = pool;
