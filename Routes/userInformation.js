@@ -3,6 +3,12 @@ const router = express.Router();
 const pool = require('./../db');
 const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
+const multer = require('multer');
+const storage = multer.diskStorage({ dest: 'uploads/' , 
+    filename: (req, cb) => {
+        cb(null,req.user.userId)}
+});
+const upload = multer({storage});
 
 router.get('/userprofile', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
@@ -204,5 +210,40 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         }
 
     });
+    router.get('/getachievement', authMiddleware, async(req,res) =>{
+
+        const userId = req.user.userId;
+
+        try{
+            const getAchievementQuery = `select users.nickname,achievement.achievementname,users_achievement.unlockdate FROM users_achievement 
+                                        LEFT JOIN achievement ON users_achievement.fk_achievement = achievement.id
+                                        LEFT JOIN users ON users_achievement.fk_user = users.id
+                                        WHERE users.id = $1`;
+            
+            const responseAchievement = await pool.query(getAchievementQuery,[userId]);
+
+            console.log(responseAchievement.rows);
+
+            if (result.rows.length === 0){
+                return res.status(200).json({message : "No achievement unlocked"});
+            }
+            return res.status(200).json(responseAchievement.rows);
+        }
+        catch(error) {
+            console.log(error);
+            return res.status(500).json({message : 'Internal Error'});
+        }
+
+    });
+
+    router.post('/uploadavatar',authMiddleware,upload.single('image'), async(req,res) =>{
+        return res.status(200).json({message:'File uploaded'});
+    
+    });
+
+    router.get('/getavatar', authMiddleware, (req,res) => {
+        const imagePath =  Path2D.join(__dirname, 'uploads', req.user.userId);
+        return res.sendFile(imagePath);
+    })
 
 module.exports = router;
