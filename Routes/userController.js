@@ -135,6 +135,8 @@ router.post('/resetpassword', async (req,res) =>{
             html: `<p> follow this link to reset your password</p>`
         }
 
+        console.log(mailContent);
+
         const mailStatus = await transporter.sendMail(mailContent);
         console.log("Mail sent successfully"+mailStatus.messageId);
 
