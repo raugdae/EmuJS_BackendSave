@@ -1,11 +1,9 @@
 const pool = require('./../db');
 
-async function updateAchievement(parameters){
-
-    try {
+async function updateAchievement(gameId,userId,data){
     console.log('entering achievement update');
+    try {
     
-    const {userId,gameId,data} = parameters;
 
     
     //Fetching achievement from game

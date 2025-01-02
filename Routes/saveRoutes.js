@@ -151,7 +151,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const achievementParameterJSON = JSON.stringify(achievementParameters)
         //console.log(achievementParameterJSON);
 
-        const achivementResult = await updateAchievement(achievementParameterJSON);
+        const achivementResult = await updateAchievement(gameId,userId,data);
 
 
         return res.status(201).json({message : 'Savefile updated'});
