@@ -151,7 +151,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
         const selectAchivementQueryValues = [gameId]
 
-        const recordAchievementQuery = 'INSERT INTO users_achivement (fk_user,fk_achievement) VALUES ($1,$2);'
+        const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2);'
         let recordAchievementValues;
 
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
