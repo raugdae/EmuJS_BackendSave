@@ -146,11 +146,10 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const userId = resultUserId.rows[0];
        
         console.log('sending to function');
-        console.log(gameId);
+        console.log({gameId});
 
-        console.log('id user');
-        const queryUserId1 = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
-        const queryUserIdValues1 = [saveid];
+        const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
+        const selectAchivementQueryValues = [{gameId}]
 
 
         /*
