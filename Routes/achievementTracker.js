@@ -29,5 +29,5 @@ async function cul(){
     return "huehue";
 };
 
-module.exports = {updateAchievement};
+module.exports = {updateAchievement,cul};
 
