@@ -149,8 +149,8 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log(gameId);
 
         console.log('id user');
-        const queryUserId = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
-        const queryUserIdValues = [saveid];
+        const queryUserId1 = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
+        const queryUserIdValues1 = [saveid];
 
 
         /*
