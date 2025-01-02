@@ -2,6 +2,7 @@ const pool = require('./../db');
 
 async function updateAchievement(parameters){
 
+    try {
     console.log('entering achievement update');
     
     const {userId,gameId,data} = parameters;
@@ -18,6 +19,10 @@ async function updateAchievement(parameters){
     console.log(listJson);
 
     return res.listJson;
+    }
+    catch (err){
+        throw err;
+    }
 
 
 
