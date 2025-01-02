@@ -26,7 +26,7 @@ async function updateAchievement(gameId,userId,data){
 
 };
 async function cul(){
-    console.log ('huehue');
+    return "huehue";
 };
 
 module.exports = {updateAchievement};
