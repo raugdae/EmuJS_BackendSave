@@ -7,7 +7,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
 const storage = multer.diskStorage({ destination: path.join(__dirname, 'uploads/') , 
     filename: (req, file, cb) => {
-        cb(null,"fichier du cul.jpg");
+        cb(null,);
     }
 });
 const upload = multer({storage});
@@ -238,7 +238,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
-    router.post('/uploadavatar',authMiddleware,upload.single('image'), async(req,res) =>{
+    router.post('/uploadavatar',upload.single('image'), async(req,res) =>{
         console.log("dans ton cul");
         return res.status(200).json({message:'File uploaded'});
     
