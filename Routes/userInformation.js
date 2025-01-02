@@ -19,7 +19,7 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
 
         if (saveFileList.rows.length === 0)
         {
-            userdata = 'SELECT users.nickname, users.email, users.creation_date, users.profile FROM users WHERE users.id = $1;';
+            userdata = 'SELECT users.nickname, users.email, users.creation_date, users.profile, users.id FROM users WHERE users.id = $1;';
             
         }else{
 
