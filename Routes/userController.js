@@ -4,6 +4,7 @@ const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const crypto = require('node:crypto');
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER,
@@ -127,15 +128,20 @@ router.post('/resetpassword', async (req,res) =>{
 
     try{
 
+        const cryptedToken = crypto.randomBytes(32).toString('hex');
+        const tokenExpiration = new Date(Date.now() + 360000);
 
         const resetToken = jwt.sign(
             {
                 userMail: userMail,
+                cryptedToken: cryptedToken,
                 type:'password_reset'
             },
             process.env.JWT_SECRET,
             {expiresIn : '1h'}
         );
+
+        await pool.query('UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',[resetToken,tokenExpiration,userMail]);
 
         const resetLink = `${process.env.API_ADDRESS}:${process.env.API_LISTENING_PORT}/updatepassword?token=${resetToken}`;
 
@@ -143,9 +149,9 @@ router.post('/resetpassword', async (req,res) =>{
             from: `"RaugEmu No-Reply" ${process.env.MAIL_USER}`,
             to : userMail,
             subject : "Reset your password to RaugEmu",
-            text : `Follow this link to reset your password`,
-            html: `<p> follow this link to reset your password</p><br> 
-            <a href="${resetLink}">Reset my password</a><br>
+            text : `Copy paste this link in your browser to reset your password ${resetLink}`,
+            html: `<p> follow this link to reset your password</p> 
+            <a href="${resetLink}">Reset my password</a>
             <p> This link will expire in 1 hour!</p>`
         }
 
@@ -159,6 +165,47 @@ router.post('/resetpassword', async (req,res) =>{
         console.log("Error while sending mail", err);
         res.status(500).json({message : 'Error on password reset'});
     }
+
+});
+
+router.post('/updatepassword', async(req,res) => {
+
+    const {token,newPassword} = req.body;
+
+    try {
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const {userMail, resetToken} = decoded;
+
+
+        const result = await pool.query(`SELECT * FROM users 
+                                            WHERE email = $1 AND reset_token = $2 AND reset_token_expire > NOW()`,
+                                        [userMail, resetToken]);
+
+
+        if (result.rows.length === 0){
+            return res.status(400).json({message : 'Token invalide ou expiré'});
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        const passchanged = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [hashedPassword,userMail]);
+
+        res.status(200).json(message,'Password updated successfully');
+
+
+    }
+    catch (err){
+        if (err.name ==='TokenExpiredError'){
+            return res.statut(400).json({message : 'Reset link expired'});
+        }
+        if (err.name === 'JsonWebTokenError'){
+            return res.status(400).json({message: 'Reset link is not valid'});
+        }
+        console.error('Error :', err);
+        res.status(500).json('Server internal error',err);
+    }
+
 
 });
 
