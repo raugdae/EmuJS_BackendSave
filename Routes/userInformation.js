@@ -1,10 +1,11 @@
 const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
+const path = require('path');
 const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
-const storage = multer.diskStorage({ dest: 'uploads/' , 
+const storage = multer.diskStorage({ dest: path.join(__dirname, 'uploads') , 
     filename: (req, file, cb) => {
         cb(null,req.user.userId)}
 });
@@ -242,7 +243,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     });
 
     router.get('/getavatar', authMiddleware, (req,res) => {
-        const imagePath =  Path2D.join(__dirname, 'uploads', req.user.userId);
+        const imagePath =  path.join(__dirname, 'uploads', req.user.userId);
         return res.sendFile(imagePath);
     })
 
