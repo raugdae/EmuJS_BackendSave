@@ -144,9 +144,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         const resultUserId = await pool.query(queryUserId,queryGameIdValues);
         const userId = resultUserId.rows[0];
-
-        //const achievementParameters = [resultGameId.rows[0],resultUserId.rows[0],data];
-            
+       
         console.log('sending to function');
         console.log(gameId);
         
@@ -183,6 +181,8 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
 async function updateAchievement({gameid},userId,data){
     console.log('entering achievement update');
 
+    const client = await pool.connect();
+
        //const {selectAchievementValues} = gameId;
     try {
     
@@ -190,7 +190,7 @@ async function updateAchievement({gameid},userId,data){
     console.log(gameId);
     //Fetching achievement from game
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
-    const achievementList = await pool.query(selectAchievementQuery,gameId);
+    const achievementList = await client.query(selectAchievementQuery,gameId);
 
     console.log('query returned');
     const listJson = achievementList.rows;
