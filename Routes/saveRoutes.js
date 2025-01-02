@@ -2,7 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 const authMiddleware = require('./authMiddleware');
-const achievementTracker = require('./achievementTracker');
+//const achievementTracker = require('./achievementTracker');
 
 
 router.get('/getsavefile', authMiddleware, async(req,res) => {
@@ -150,7 +150,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log('sending to function');
         console.log(gameId);
         
-        const achivementResult = await achievementTracker.updateAchievement(gameId,userId,data);
+        const achivementResult = await updateAchievement(gameId,userId,data);
 
 
         return res.status(201).json({message : 'Savefile updated'});
@@ -179,6 +179,33 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
         }
 
 });
+
+async function updateAchievement({gameid},userId,data){
+    console.log('entering achievement update');
+
+       //const {selectAchievementValues} = gameId;
+    try {
+    
+        const gameId = gameid;
+    console.log(gameid);
+    //Fetching achievement from game
+    const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
+    const achievementList = await temppool.query(selectAchievementQuery,gameId);
+
+    console.log('query returned');
+    const listJson = achievementList.rows;
+    
+    console.log(listJson);
+
+    return res.listJson;
+    }
+    catch (err){
+        throw err;
+    }
+
+
+
+};
 
 
 module.exports = router;
