@@ -177,7 +177,7 @@ router.post('/updatepassword', async(req,res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const {userMail, resetToken} = decoded;
 
-
+        console.log('checking user');
         const result = await pool.query(`SELECT * FROM users 
                                             WHERE email = $1 AND token_reset = $2 AND token_reset_expiration > NOW()`,
                                         [userMail, resetToken]);
@@ -189,6 +189,7 @@ router.post('/updatepassword', async(req,res) => {
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
+        console.log('Saving new password');
         const passchanged = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [hashedPassword,userMail]);
 
         res.json(message,'Password updated successfully');
