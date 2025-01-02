@@ -5,7 +5,7 @@ const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
 const storage = multer.diskStorage({ dest: 'uploads/' , 
-    filename: (req, cb) => {
+    filename: (req, file, cb) => {
         cb(null,req.user.userId)}
 });
 const upload = multer({storage});
