@@ -93,7 +93,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         console.log(userId, profileText);
 
         try{
-            const query = 'UPDATE users SET profile = $1 WHERE id = $2 RETURN nickname, profile;'
+            const query = 'UPDATE users SET profile = $1 WHERE id = $2;'
             const value = [profileText,userId];
 
             const result = await pool.query(query,value);
