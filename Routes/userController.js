@@ -128,7 +128,7 @@ router.post('/resetpassword', async (req,res) =>{
     try{
 
         const mailContent = {
-            from: `"RaugEmu No-Reply" ${process.env.USER_MAIL}`,
+            from: `"RaugEmu No-Reply" ${process.env.MAIL_USER}`,
             to : userMail,
             subject : "Reset your password to RaugEmu",
             text : `Follow this link to reset your password`,
