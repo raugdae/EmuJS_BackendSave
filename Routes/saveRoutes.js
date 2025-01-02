@@ -189,7 +189,7 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
 });
 
 
-async function updateAchievement(pool,gameid,userId,data){
+async function updateAchievement(pool,gameId,userId,data){
     console.log('entering achievement update');
 
     const client = await pool.connect();
@@ -197,8 +197,6 @@ async function updateAchievement(pool,gameid,userId,data){
        //const {selectAchievementValues} = gameId;
     try {
     
-    const gameId = gameid;
-    console.log(gameId);
     //Fetching achievement from game
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
     const achievementList = await client.query(selectAchievementQuery,gameId);
