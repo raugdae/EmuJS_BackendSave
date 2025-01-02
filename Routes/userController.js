@@ -144,8 +144,8 @@ router.post('/resetpassword', async (req,res) =>{
             to : userMail,
             subject : "Reset your password to RaugEmu",
             text : `Follow this link to reset your password`,
-            html: `<p> follow this link to reset your password</p>< /br> 
-            <a href="${resetLink}>Reset my password</a></br>
+            html: `<p> follow this link to reset your password</p><br> 
+            <a href="${resetLink}>Reset my password</a><br>
             <p> This link will expire in 1 hour!</p>`
         }
 
