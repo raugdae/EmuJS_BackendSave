@@ -11,7 +11,7 @@ async function updateAchievement(gameId,userId,data){
     const selectAchievementValues = [gameId];
 
     console.log('sending query');
-    const achievementList = await pool.query(selectAchievementQuery,selectAchievementQuery);
+    const achievementList = await pool.query(selectAchievementQuery,selectAchievementValues);
 
     console.log('query returned');
     const listJson = achievementList.rows;
