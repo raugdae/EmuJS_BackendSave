@@ -143,7 +143,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const queryUserIdValues = [saveid];
 
         const resultUserId = await pool.query(queryGameId,queryGameIdValues);
-        const userId = resultGameId.rows[0];
+        const userId = resultUserId.rows[0];
         
         console.log('sending to function');
         const achievementParameter = JSON.stringify({userId,gameId,data})
