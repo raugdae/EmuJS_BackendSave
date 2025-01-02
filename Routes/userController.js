@@ -3,6 +3,18 @@ const router = express.Router();
 const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_SERVER,
+    port: process.env.MAIL_PORT,
+    secure: process.env.SMTP_SECURE,
+    auth: {
+        user:process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD
+    } 
+    
+})
 
 // Route pour l'enregistrement
 router.post('/register', async (req, res) => {
@@ -108,5 +120,30 @@ router.post('/login', async (req,res) => {
         return res.status(500).json({message: 'Error during login'});
     }
 });
+
+router.post('/resetpassword', async (req,res) =>{
+
+    const {userMail} = req.body;
+
+    try{
+
+        const mailContent = {
+            from: `"RaugEmu No-Reply" ${process.env.USER_MAIL}`,
+            to : userMail,
+            subject : "Reset your password to RaugEmu",
+            text : `Follow this link to reset your password`,
+            html: `<p> follow this link to reset your password</p>`
+        }
+
+        const mailStatus = await transporter.sendMail(mailContent);
+        console.log("Mail sent successfully"+mailStatus.messageId);
+
+    }
+    catch(err){
+        console.log("Error while sending mail", err);
+    }
+
+});
+
 
 module.exports = router;
