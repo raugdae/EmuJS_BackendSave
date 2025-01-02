@@ -126,20 +126,17 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const query = 'UPDATE games SET size = $2, data = $3::jsonb, change_date = CURRENT_TIMESTAMP WHERE id = $1';
         const values = [saveid,size,JSON.stringify(data)];
 
-        //console.log(values);
-
+        //Updating savefile
         const result = await pool.query(query,values);
 
-        console.log('id gamelist');
+
+        //preparing data for Achivement update 
         const queryGameId = 'SELECT id AS gameId from gamelist WHERE id = (SELECT fk_gamelist FROM games WHERE id = $1)';
         const queryGameIdValues = [saveid];
 
-        
         const resultGameId = await pool.query(queryGameId,queryGameIdValues);
         const gameId = resultGameId.rows[0].gameid;
-        //const {gameId} = gameIdDB;
         
-        console.log('id user');
         const queryUserId = 'SELECT id AS userId from users WHERE id = (SELECT fk_user FROM games WHERE id = $1)';
         const queryUserIdValues = [saveid];
 
@@ -150,16 +147,14 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log(gameId);
         console.log(userId);
 
-        const cul = await updateAchievement(pool,gameId,userId,data);
-
-        /*
+        // achievement check
         const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1';
         const selectAchivementQueryValues = [gameId]
 
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
 
         console.log(resultAchievementQuery.rows);
-        */
+        
 
         return res.status(201).json({message : 'Savefile updated'});
     }
@@ -187,31 +182,6 @@ router.post('/deletesave', authMiddleware, async(req,res) =>{
         }
 
 });
-
-
-async function updateAchievement(pool,gameId,userId,data){
-    console.log('entering achievement update');
-
-    try {
-    
-    //Fetching achievement from game
-    const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
-    const achievementList = await pool.query(selectAchievementQuery,gameId);
-
-    console.log('query returned');
-    const listJson = achievementList.rows;
-    
-    console.log(listJson);
-
-    return listJson;
-    }
-    catch (err){
-        throw err;
-    }
-
-
-
-};
 
 
 module.exports = router;

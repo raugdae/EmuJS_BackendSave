@@ -58,12 +58,9 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         }
         //console.log(result.rows);
         return res.status(200).json(result.rows);
-
-
-        
     }
     catch(err){
-        return res.status(500).json({Message : 'Internal Error', Error:err});
+        return res.status(500).json({Message : 'Internal Error'});
     }
 });
 
