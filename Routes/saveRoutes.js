@@ -186,8 +186,8 @@ async function updateAchievement({gameid},userId,data){
        //const {selectAchievementValues} = gameId;
     try {
     
-        const gameId = gameid;
-    console.log(gameid);
+    const gameId = gameid;
+    console.log(gameId);
     //Fetching achievement from game
     const selectAchievementQuery = `SELECT id,memorylocation,waitedvalue FROM achievement WHERE fk_gamelist = $1`;
     const achievementList = await temppool.query(selectAchievementQuery,gameId);
@@ -197,7 +197,7 @@ async function updateAchievement({gameid},userId,data){
     
     console.log(listJson);
 
-    return res.listJson;
+    return listJson;
     }
     catch (err){
         throw err;
