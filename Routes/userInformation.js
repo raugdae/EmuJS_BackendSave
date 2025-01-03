@@ -5,12 +5,14 @@ const path = require('path');
 const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
-const storage = multer.diskStorage({ destination: path.join(__dirname, 'uploads/') , 
+const storage = multer.diskStorage({ destination: 'uploads/' , 
     filename: (req, file, cb) => {
-        cb(null,);
+
+        console.log(file);
+        cb(null,req.user.userId+".jpg");
     }
 });
-const upload = multer({storage});
+const upload = multer({storage :storage});
 
 router.get('/userprofile', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
@@ -238,7 +240,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
-    router.post('/uploadavatar',upload.single('image'), async(req,res) =>{
+    router.post('/uploadavatar',authMiddleware,upload.single('image'), async(req,res) =>{
         console.log("dans ton cul");
         return res.status(200).json({message:'File uploaded'});
     
