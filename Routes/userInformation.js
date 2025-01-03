@@ -7,6 +7,8 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
 const storage = multer.diskStorage({ destination: 'uploads/' , 
     filename: (req, file, cb) => {
+
+        console.log(file);
         cb(null,req.user.userId+".jpg");
     }
 });
