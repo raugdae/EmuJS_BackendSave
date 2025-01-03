@@ -219,10 +219,11 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const userId = req.user.userId;
 
         try{
-            const getAchievementQuery = `select users.nickname,achievement.achievementname,users_achievement.unlockdate FROM users_achievement 
+            const getAchievementQuery = `SELECT users.nickname,achievement.achievementname,achievement.description,users_achievement.unlockdate,gamelist.name AS game FROM users_achievement 
                                         LEFT JOIN achievement ON users_achievement.fk_achievement = achievement.id
                                         LEFT JOIN users ON users_achievement.fk_user = users.id
-                                        WHERE users.id = $1`;
+										LEFT JOIN gamelist ON achievement.fk_gamelist = gamelist.id WHERE users.id = $1`
+                                        ;
             
             const responseAchievement = await pool.query(getAchievementQuery,[userId]);
 
