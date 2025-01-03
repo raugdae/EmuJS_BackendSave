@@ -226,7 +226,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             console.log(responseAchievement.rows);
 
-            if (result.rows.length === 0){
+            if (responseAchievement.rows.length === 0){
                 return res.status(200).json({message : "No achievement unlocked"});
             }
             return res.status(200).json(responseAchievement.rows);
