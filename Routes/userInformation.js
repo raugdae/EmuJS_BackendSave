@@ -5,12 +5,12 @@ const path = require('path');
 const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
-const storage = multer.diskStorage({ dest: 'uploads/' , 
+const storage = multer.diskStorage({ destination: 'uploads/' , 
     filename: (req, file, cb) => {
         cb(null,req.user.userId+".jpg");
     }
 });
-const upload = multer({storage});
+const upload = multer({storage :storage});
 
 router.get('/userprofile', authMiddleware , async(req,res) =>{
     const userId = req.user.userId;
