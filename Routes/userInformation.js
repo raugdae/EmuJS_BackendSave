@@ -38,7 +38,7 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
 
         const result = await pool.query(userdata,value);
 
-        console.log(result.rows);
+        //console.log(result.rows);
 
         if (result.rows.length === 0){
             return res.status(404).json({message : 'User not found'});
@@ -83,9 +83,11 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             const query = 'DELETE FROM games WHERE id = $1 AND fk_user= $2'
             const value = [saveId,userId];
-    
+        
             const result = await pool.query(query,value);
-            
+        
+            console.log("save deleted ",saveId);
+
             return res.status(200).json({message : 'Save File delete... ->x.x<-'});
     
     
@@ -100,7 +102,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const {profileText} = req.body;
         const userId = req.user.userId;
 
-        console.log(userId, profileText);
+        //console.log(userId, profileText);
 
         try{
             const query = 'UPDATE users SET profile = $1 WHERE id = $2;'
@@ -141,7 +143,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const userId = req.user.userId;
         const {gameName} = req.body;
 
-        console.log ("enter timestamp", userId, gameName);
+        //console.log ("enter timestamp", userId, gameName);
 
         try {
 
@@ -150,7 +152,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             const result = await pool.query(query,values);
             
-            console.log(result.rows[0]);
+            //console.log(result.rows[0]);
 
             return res.status(201).json(result.rows[0]);
 
@@ -167,7 +169,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
         const userId = req.user.userId;
         const {historyId} = req.body;
 
-        console.log("enter stop time", userId, historyId);
+        //console.log("enter stop time", userId, historyId);
 
         try {
 
@@ -201,7 +203,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
             const result = await pool.query(query,values);
 
-            console.log(result.rows);
+            //console.log(result.rows);
 
             if (result.rows.length === 0){
                 return res.status(204).json();
@@ -242,7 +244,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
     });
 
     router.post('/uploadavatar',authMiddleware,upload.single('image'), async(req,res) =>{
-        console.log("dans ton cul");
+        //console.log("dans ton cul");
         return res.status(200).json({message:'File uploaded'});
     
     });
