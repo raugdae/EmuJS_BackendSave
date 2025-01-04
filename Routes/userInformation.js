@@ -13,10 +13,10 @@ const storage = multer.diskStorage({ destination: function (req, file, cb) {
   } , 
     filename: (req, file, cb) => {
 
-        console.log(file);
+        //console.log(file);
         const imageExtension = file.mimetype.split('/')[1];
-        console.log(imageExtension)
-        cb(null,req.user.userId+".jpg");
+        //console.log(imageExtension)
+        cb(null,req.user.userId+"."+imageExtension);
     }
 });
 const upload = multer({storage :storage});
@@ -252,7 +252,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     router.post('/uploadavatar', authMiddleware,upload.single('image'), async(req,res) =>{
 
-        console.log("dans ton cul : ",req.file);
+        //console.log("dans ton cul : ",req.file);
         return res.status(200).json({message:'File uploaded'});
     
     });
