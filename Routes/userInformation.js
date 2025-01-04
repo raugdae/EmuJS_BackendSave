@@ -8,6 +8,7 @@ const multer = require('multer');
 
 
 const storage = multer.diskStorage({ destination: function (req, file, cb) {
+    console.log('accessing folder');
     cb(null, 'share/profilepic')
   } , 
     filename: (req, file, cb) => {
