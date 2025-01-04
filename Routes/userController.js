@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 // Route pour l'enregistrement
 router.post('/register', async (req, res) => {
     try {
-        console.log('registering function entered');
+        //console.log('registering function entered');
         const { email, password, username } = req.body;
 
         if (!email || !password) {
@@ -79,7 +79,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req,res) => {
-    console.log("Entering login function");
+    //console.log("Entering login function");
     try {
         const { email, password } = req.body;
         const userExist = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -91,7 +91,7 @@ router.post('/login', async (req,res) => {
         }
         
         const selectedUser = userExist.rows[0];
-        console.log(selectedUser);
+        console.log(selectedUser.nickname);
         
         const validPassword = await bcrypt.compare(password, selectedUser.password);
         if (!validPassword) {
@@ -197,10 +197,10 @@ router.post('/updatepassword', async(req,res) => {
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        console.log('Saving new password');
+        //console.log('Saving new password');
         const passchanged = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [hashedPassword,userMail]);
 
-        return res.status(200).json({message:'Password updated successfully'});
+        return res.status(200).json({message:'Password updated successfull'});
 
 
     }

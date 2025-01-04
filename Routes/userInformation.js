@@ -5,7 +5,7 @@ const path = require('path');
 const authMiddleware = require('./authMiddleware');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const multer = require('multer');
-const storage = multer.diskStorage({ destination: 'uploads/' , 
+const storage = multer.diskStorage({ destination: 'shared/profilepic' , 
     filename: (req, file, cb) => {
 
         console.log(file);
@@ -229,7 +229,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
             
             const responseAchievement = await pool.query(getAchievementQuery,[userId]);
 
-            console.log(responseAchievement.rows);
+            //console.log(responseAchievement.rows);
 
             if (responseAchievement.rows.length === 0){
                 return res.status(200).json({message : "No achievement unlocked"});
@@ -243,7 +243,7 @@ router.get('/usersavelist', authMiddleware , async(req,res) =>{
 
     });
 
-    router.post('/uploadavatar',authMiddleware,upload.single('image'), async(req,res) =>{
+    router.post('/uploadavatar',upload.single('image'), async(req,res) =>{
         //console.log("dans ton cul");
         return res.status(200).json({message:'File uploaded'});
     
