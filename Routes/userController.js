@@ -91,7 +91,7 @@ router.post('/login', async (req,res) => {
         }
         
         const selectedUser = userExist.rows[0];
-        console.log(selectedUser.nickname);
+        console.log("Login ", selectedUser.nickname ," : ",Date.now());
         
         const validPassword = await bcrypt.compare(password, selectedUser.password);
         if (!validPassword) {
