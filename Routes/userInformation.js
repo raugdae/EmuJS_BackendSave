@@ -9,11 +9,13 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({ destination: function (req, file, cb) {
     console.log('accessing folder');
-    cb(null, 'share/profilepic')
+    cb(null, '.shared/profilepic')
   } , 
     filename: (req, file, cb) => {
 
         console.log(file);
+        const imageExtension = file.mimetype.split('/')[1];
+        console.log(imageExtension)
         cb(null,req.user.userId+".jpg");
     }
 });
