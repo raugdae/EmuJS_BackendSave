@@ -8,9 +8,6 @@ function updateAchievement(achievementList,data){
         if (achievement.achievementcondition === 'binarycheck'){
             console.log ('Achievement is binary compare');
 
-            console.log('Data Value :', data[achievement.memorylocation]);
-            console.log('waited Value :',achievement.waitedvalue);
-
             if (data[achievement.memorylocation] === achievement.waitedvalue){
                 return achievement.id;
             }
