@@ -13,7 +13,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
     res.header('Expires','0');
 
     const userId = req.user.userId;
-    console.log('Entering checkroms : ', userId);
+    //console.log('Entering checkroms : ', userId);
 
     try {
         
@@ -33,7 +33,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
         const pathToBoxArt = process.env.BOXART_PATH;
         const frotendRomPath = process.env.FRONTEND_ROM_PATH;
 
-        console.log('path to scan :', rootRomFolder);
+        //console.log('path to scan :', rootRomFolder);
         
         let romScan = [];
 
@@ -65,7 +65,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
             }
         };
         
-        console.log(romScan);
+        //console.log(romScan);
         
         const preparePayload = [];
 
@@ -91,7 +91,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
         const payloadJsonified = JSON.stringify(preparePayload);
 
-        console.log(payloadJsonified);
+        //console.log(payloadJsonified);
 
         return res.status(200).json(preparePayload);
 
