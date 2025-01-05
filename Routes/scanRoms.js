@@ -177,7 +177,7 @@ router.post('/updateromdata', authMiddleware, async (req,res) =>{
 
         const fileName = inputData.romPath.split('/')[3];
         console.log(fileName);
-        const queryUpdateRomData = `UPDATE gamelist SET (name = $1), (boxartpath = $3), (yearofdistribution = $4), (developer = $5), (rompath = $6), (categorie = $7)
+        const queryUpdateRomData = `UPDATE gamelist SET name = $1, boxartpath = $3, yearofdistribution = $4, developer = $5, rompath = $6, categorie = $7
                                     WHERE filename = $2`;
         const queryUpdateRomDataValue = [inputData.title,fileName,inputData.boxArtPath,inputData.year,inputData.developer,inputData.romPath,inputData.categories];
 
