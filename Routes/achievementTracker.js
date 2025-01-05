@@ -1,5 +1,6 @@
 function updateAchievement(achievementList,data){
     console.log('entering achievement update');
+    console.log(data);
 
     achievementList.forEach(achievement => {
         

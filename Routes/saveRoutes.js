@@ -146,7 +146,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         //console.log(resultAchievementQuery.rows);
 
-        const resultUpdateAchievement = achievementTracker.updateAchievement(resultAchievementQuery.rows,data);
+        const resultUpdateAchievement = achievementTracker.updateAchievement(resultAchievementQuery.rows,JSON.stringify(data));
         console.log('return from fucntion', resultUpdateAchievement);
 
         const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2) ON CONFLICT (fk_user, fk_achievement) DO NOTHING;'
