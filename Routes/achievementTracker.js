@@ -26,7 +26,7 @@ function updateAchievement(achievementList,data){
             }
 
 
-            
+            console.log(counter);
             if (counter = achievement.totalvalue){
                 console.log('achievement unlocked')
                 unlockedAchivement.push(achievement.id);
