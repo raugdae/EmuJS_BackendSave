@@ -26,6 +26,7 @@ router.get('/updateromlist', async (req,res) =>{
         */
         const rootRomFolder = process.env.ROOT_ROM_FOLDER;
         const pathToBoxArt = process.env.BOXART_PATH;
+        const frotendRomPath = process.env.FRONTEND_ROM_PATH;
 
         console.log('path to scan :', rootRomFolder);
         
@@ -37,7 +38,6 @@ router.get('/updateromlist', async (req,res) =>{
         let queryRomAlreadyExistsValue;
 
         const queryListConsoles = 'SELECT id,shortname FROM device';
-
         const resultListConsoles = await pool.query(queryListConsoles);
         
        
@@ -66,18 +66,22 @@ router.get('/updateromlist', async (req,res) =>{
 
         romScan.forEach( rom =>{
 
+            const findDeviceId = resultListConsoles.find( rom => rom.name === shortname);
+
             preparePayload.push ({
                 title : null,
-                boxArtPath : pathToBoxArt+rom.name+".jpg",
+                boxArtPath : pathToBoxArt+rom.name.split('.',0)+".jpg",
                 year: null,
-                console : rom.path.split('/',)
-
+                console : rom.path.split('/',3),
+                consoleid : findDeviceId.id,
+                develper : null,
+                romPath: frotendRomPath+rom.name,
+                categories:[null]
 
             })
-
-
-
         })
+
+        console.log(preparePayload);
 
         return res.status(200).json({message : 'payload not ready'});
 
