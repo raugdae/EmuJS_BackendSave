@@ -18,7 +18,7 @@ function updateAchievement(achievementList,data){
 
             console.log('enter counter achievement');
 
-            for (const i = 0; i <= achievement.rangeinram; i++){
+            for (let i = 0; i <= achievement.rangeinram; i++){
 
                 console.log(data[memorypointer]);
 
