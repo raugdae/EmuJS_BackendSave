@@ -67,7 +67,8 @@ router.get('/updateromlist', async (req,res) =>{
 
         romScan.forEach( rom =>{
 
-            const findDeviceId = resultListConsoles.rows.find( rom => rom.name === shortname);
+            console.log(rom.path.split('/',3));
+            const findDeviceId = resultListConsoles.rows.find( rom => rom.path.split('/',3) === shortname);
 
             preparePayload.push ({
                 title : null,
