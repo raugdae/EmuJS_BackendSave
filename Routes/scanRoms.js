@@ -47,11 +47,14 @@ router.get('/updateromlist', async (req,res) =>{
                     console.log('Preparing to add new rom :', element.name);
                     romScan.push({name : element.name, path: element.path});
                 }
+                /*
                 else{
                     console.log('Rom already exists : ',element.name);
-                }
+                }*/
             }
         });
+
+        console.log(romScan);
 
 
 
