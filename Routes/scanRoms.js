@@ -12,7 +12,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
     res.header('Pragma', 'no-cache');
     res.header('Expires','0');
 
-    const userId = req.user.UserId ;
+    const userId = req.user.userId;
     console.log('Entering checkroms : ', userId);
 
     try {
