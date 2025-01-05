@@ -10,7 +10,7 @@ router.get('/updateromlist', async (req,res) =>{
     const userId = req.user.UserId ;
 
     try {
-
+        /*
         const queryIsUserAdmin = `SELECT userright AS role FROM users WHERE id = $1`;
         const queryIsUserAdminValue = [userId];
 
@@ -22,13 +22,15 @@ router.get('/updateromlist', async (req,res) =>{
         if (answerIsUserAdmin.rows[0].role != 'admin'){
             return res.status(401).json({message : 'insuffisant persmission'})
         }
-
+        */
         const rootRomFolder = process.env.ROOT_ROM_FOLDER;
 
-
+        
         let romScan = [];
 
         const files = await fs.readdir(rootRomFolder, {recursive:true,withFileTypes:true});
+
+        console.log('path to scan :', rootRomFolder);
 
         files.array.forEach(element => {
             if (!element.isDirectory()){
