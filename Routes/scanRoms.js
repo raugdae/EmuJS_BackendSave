@@ -140,7 +140,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
         let preparePayload = [];
 
         //console.log('prepare payload');
-        responseGetRoms.row.forEach(rom => {
+        responseGetRoms.rows.forEach(rom => {
 
 
             //console.log('current game : ',rom);
