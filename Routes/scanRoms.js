@@ -2,7 +2,8 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 const authMiddleware = require('./authMiddleware');
-const fs = require('fs').promise
+const fs = require('fs').promises;
+
 
 
 router.get('/updateromlist', async (req,res) =>{
