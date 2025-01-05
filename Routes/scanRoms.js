@@ -13,7 +13,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
     res.header('Expires','0');
 
     const userId = req.user.UserId ;
-    console.log('Entering checkroms');
+    console.log('Entering checkroms : ', userId);
 
     try {
         
@@ -26,7 +26,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
             return res.status(204).json({message : 'No user found'});
         }
         if (answerIsUserAdmin.rows[0].role != 'admin'){
-            return res.status(401).json({message : 'insuffisant persmission'})
+            return res.status(403).json({message : 'insuffisant persmission'})
         }
         
         const rootRomFolder = process.env.ROOT_ROM_FOLDER;
@@ -126,9 +126,9 @@ router.post('/getromslist', authMiddleware, async (req,res) => {
 
     try{
 
-        const querygetroms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shorname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
+        const querygetroms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shortname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
                                 FROM gamelist 
-                                LEFTJOIN device ON gamlist.fk_device = device.id`;
+                                LEFT JOIN device ON gamelist.fk_device = device.id`;
 
         return res.send(200).json({message : 'endpoint not ready'})
     }
