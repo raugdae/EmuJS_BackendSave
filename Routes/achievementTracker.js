@@ -1,5 +1,6 @@
 function updateAchievement(achievementList,data){
     //console.log('entering achievement update');
+    let unlockedAchivement = [];
 
     achievementList.forEach(achievement => {
         console.log (data[achievement.memorylocation]);
@@ -9,7 +10,7 @@ function updateAchievement(achievementList,data){
             
 
             if (data[achievement.memorylocation] === achievement.waitedvalue){
-                return achievement.id;
+                unlockedAchivement.push(achievement.id);
             }
 
         }
@@ -21,7 +22,7 @@ function updateAchievement(achievementList,data){
 
 
 
-    return true;
+    return unlockedAchivement;
 };
 
 
