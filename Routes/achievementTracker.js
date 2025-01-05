@@ -5,7 +5,7 @@ function updateAchievement(achievementList,data){
 
 
 
-
+    return true;
 };
 
 

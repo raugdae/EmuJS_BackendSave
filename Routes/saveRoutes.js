@@ -138,9 +138,6 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const resultGameId = await pool.query(queryGameId,queryGameIdValues);
         const gameId = resultGameId.rows[0].gameid;
        
-        console.log('sending to function');
-        console.log(gameId);
-        console.log(userId);
 
         // achievement check
         const selectAchievementQuery = 'SELECT memorylocation,waitedvalue,sizeinram,achievementcondition FROM achievement WHERE fk_gamelist = $1 ';
@@ -148,7 +145,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
 
-        console.log(selectAchivementQueryValues);
+        console.log(resultAchievementQuery.rows);
 
         const resultUpdateAchievement = achievementTracker.updateAchievement(recordAchievementQuery.rows,data);
 
