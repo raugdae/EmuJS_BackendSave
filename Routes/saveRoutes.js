@@ -144,7 +144,6 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         const selectAchivementQueryValues = [gameId];
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
 
-        console.log(resultAchievementQuery.rows[0]);
 
         //console.log(resultAchievementQuery.rows);
 
