@@ -8,6 +8,10 @@ const fs = require('fs').promises;
 
 router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
+    res.header('Cache-Contro', 'no-cache, no-store, must-revalidate');
+    res.header('Pragma', 'no-cache');
+    res.header('Expires','0');
+
     const userId = req.user.UserId ;
     console.log('Entering checkroms');
 
