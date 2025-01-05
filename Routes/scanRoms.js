@@ -35,8 +35,6 @@ router.get('/updateromlist', async (req,res) =>{
         
 
         files.forEach(element => {
-            
-        });(element => {
             if (!element.isDirectory()){
                 romScan.push({name : element.name, path: element.path})
             }
