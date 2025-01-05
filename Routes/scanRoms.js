@@ -123,19 +123,62 @@ router.post('/registernewroms', authMiddleware,async(req,res) =>{
 
 });
 
-router.post('/getromslist', authMiddleware, async (req,res) => {
+router.get('/getromslist', authMiddleware, async (req,res) => {
 
     try{
 
-        const querygetroms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shortname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
+        const queryGetRoms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shortname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
                                 FROM gamelist 
                                 LEFT JOIN device ON gamelist.fk_device = device.id`;
 
-        return res.send(200).json({message : 'endpoint not ready'})
+        const responseGetRoms = await pool.query(queryGetRoms);
+
+        let preparePayload = [];
+
+        responseGetRoms.rows.forEach(rom => {
+
+            console.log(rom.path.split('/')[3]);
+            
+            preparePayload.push ({
+                title : null,
+                boxArtPath : pathToBoxArt+rom.name.split('.')[0]+".jpg",
+                year: null,
+                console : rom.path.split('/')[3],
+                developer : null,
+                romPath: frotendRomPath+rom.path.split('/')[2]+'/'+rom.path.split('/')[3]+'/'+rom.name,
+                categories:[null]
+
+            })
+        });
+
+
+        return res.status(200).json(preparePayload)
     }
     catch (err)
     {
-        return res.send(500).json({messaage : 'Internal server error'});
+        return res.status(500).json({messaage : 'Internal server error'});
+    }
+
+});
+
+router.post('/updateromdata', authMiddleware, async (req,res) =>{
+
+    const inputData = req.body;
+
+    try {
+
+        const queryUpdateRomData = `UPDATE gamelist SET (name = $1), (filename = $2), (boxartpath = $3), (yearofdistribution = $4), (developer = $5), (rompath = $6), (categorie = $7)
+                                    WHERE filename = $2`;
+        const queryUpdateRomDataValue = [inputData.title,inputData.romPath.split('/')[5],inputData.boxArtPath,inputData.year,inputData.developer,inputData.romPath,inputData.categories];
+
+        const resultUpdateRomData = pool.query(queryUpdateRomData,queryUpdateRomDataValue);
+
+        return res.status(200).json({message : 'Row in DB updated'})
+
+    }
+    catch (err){
+        console.log('update rom data :', err)
+        return res.status(500).json({message : 'Internal server error'});
     }
 
 });
