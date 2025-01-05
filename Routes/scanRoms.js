@@ -105,7 +105,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
 router.post('/registernewroms', authMiddleware,async(req,res) =>{
     const inputdata = req.body;
-    console.log(inputdata);
+    //console.log(inputdata);
 
     try {
     const queryInsertRom = 'INSERT INTO gamelist (name, filename, fk_device, boxartpath, yearofdistribution,developer,rompath,categorie) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)';
@@ -135,7 +135,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 
         const responseGetRoms = await pool.query(queryGetRoms);
 
-        console.log (responseGetRoms.rows);
+        //console.log (responseGetRoms.rows);
 
         let preparePayload = [];
 
@@ -143,7 +143,8 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
         responseGetRoms.rows.forEach(rom => {
 
 
-            //console.log('current game : ',rom);
+
+            console.log('current game : ',rom);
             preparePayload.push ({
                 title : rom.title,
                 boxArtPath : rom.boxArtPath,
