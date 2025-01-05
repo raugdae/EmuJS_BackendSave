@@ -83,7 +83,11 @@ router.get('/updateromlist', async (req,res) =>{
             })
         })
 
-        console.log(preparePayload);
+        //console.log(preparePayload);
+
+        const payloadJsonified = JSON.stringify(preparePayload);
+
+        console.log(payloadJsonified);
 
         return res.status(200).json({message : 'payload not ready'});
 
