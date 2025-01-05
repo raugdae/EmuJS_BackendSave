@@ -133,11 +133,13 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 
         const responseGetRoms = await pool.query(queryGetRoms);
 
+        console.log (responseGetRoms.rows);
+
         let preparePayload = [];
 
+        console.log('prepare payload');
         responseGetRoms.rows.forEach(rom => {
 
-            console.log(rom.path.split('/')[3]);
             
             preparePayload.push ({
                 title : null,
