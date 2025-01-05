@@ -6,12 +6,12 @@ const fs = require('fs').promises;
 
 
 
-router.get('/updateromlist', async (req,res) =>{
+router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
-    //const userId = req.user.UserId ;
+    const userId = req.user.UserId ;
 
     try {
-        /*
+        
         const queryIsUserAdmin = `SELECT userright AS role FROM users WHERE id = $1`;
         const queryIsUserAdminValue = [userId];
 
@@ -23,7 +23,7 @@ router.get('/updateromlist', async (req,res) =>{
         if (answerIsUserAdmin.rows[0].role != 'admin'){
             return res.status(401).json({message : 'insuffisant persmission'})
         }
-        */
+        
         const rootRomFolder = process.env.ROOT_ROM_FOLDER;
         const pathToBoxArt = process.env.BOXART_PATH;
         const frotendRomPath = process.env.FRONTEND_ROM_PATH;
@@ -98,5 +98,24 @@ router.get('/updateromlist', async (req,res) =>{
     }
 
 });
+
+router.post('/registernewroms', authMiddleware,async(req,res) =>{
+    const inputdata = req.body;
+
+    try {
+    const queryInsertRom = 'INSERT INTO gamelist (name, fielname, fk_device, boxartpath, yearsofdistribution,develper,rompath,categorie) VALUES ($1,$2,$3,$4,$5,$6,$7)';
+    const queryInsertRomValue = [inputdata.title,inputdata.romPath.split('/')[3],inputdata.deviceid,inputdata.boxArtPath,inputdata.year,inputdata.developer,inputdata.romPath,inputdata.categories];
+
+    const resultInsertRomValue = await pool.query(queryInsertRom,queryInsertRomValue);
+
+    res.status(200).json({message : 'New roms recorded'});
+
+    }
+    catch (err){
+        console.log("resigetering rom error : ",err)
+        res.status(500).json({message : 'Internal server error'});
+    }
+
+})
 
 module.exports = router;
