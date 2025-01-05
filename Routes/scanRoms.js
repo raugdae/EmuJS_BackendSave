@@ -72,7 +72,7 @@ router.get('/updateromlist', async (req,res) =>{
 
             preparePayload.push ({
                 title : null,
-                boxArtPath : pathToBoxArt+rom.name.split('.',[0])+".jpg",
+                boxArtPath : pathToBoxArt+rom.name.split('.')[0]+".jpg",
                 year: null,
                 console : rom.path.split('/')[3],
                 consoleid : findDeviceId.id,
