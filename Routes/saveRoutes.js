@@ -147,7 +147,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         //console.log(resultAchievementQuery.rows);
 
-        const resultUpdateAchievement = achievementTracker.updateAchievement(resultAchievementQuery.rows,JSON.stringify(data));
+        const resultUpdateAchievement = achievementTracker.updateAchievement(resultAchievementQuery.rows,data);
         
         console.log('return from fucntion', resultUpdateAchievement);
 
