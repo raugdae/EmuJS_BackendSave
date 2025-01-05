@@ -40,7 +40,7 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
             
         }else{
 
-            userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile, users.creation_date, users.id, user.userright FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.id,users.nickname,users.email,users.profile,users.creation_date) ;'
+            userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile, users.creation_date, users.id, users.userright FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.id,users.nickname,users.email,users.profile,users.creation_date,users.userright) ;'
         }
 
         const result = await pool.query(userdata,value);
