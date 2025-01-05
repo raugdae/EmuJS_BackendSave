@@ -67,14 +67,14 @@ router.get('/updateromlist', async (req,res) =>{
 
         romScan.forEach( rom =>{
 
-            console.log(rom.path.split('/',3));
-            const findDeviceId = resultListConsoles.rows.find( rom => rom.path.split('/',3) === shortname);
+            console.log(rom.path.split('/',[3]));
+            const findDeviceId = resultListConsoles.rows.find( rom => rom.path.split('/',[3]) === shortname);
 
             preparePayload.push ({
                 title : null,
-                boxArtPath : pathToBoxArt+rom.name.split('.',0)+".jpg",
+                boxArtPath : pathToBoxArt+rom.name.split('.',[0])+".jpg",
                 year: null,
-                console : rom.path.split('/',3),
+                console : rom.path.split('/',[3]),
                 consoleid : findDeviceId.id,
                 develper : null,
                 romPath: frotendRomPath+rom.name,
