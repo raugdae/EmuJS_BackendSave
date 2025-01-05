@@ -45,7 +45,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
         const queryListConsoles = 'SELECT id,shortname FROM device';
         const resultListConsoles = await pool.query(queryListConsoles);
         
-        console.log(resultListConsoles.rows);
+        //console.log(resultListConsoles.rows);
 
          for ( const element of files ){
             if (!element.isDirectory() && element.name != '.gitignore' && element.name != '.gitkeep'){
@@ -140,7 +140,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
         console.log('prepare payload');
         responseGetRoms.rows.map(rom => {
 
-            
+            console.log('current game : ',rom);
             preparePayload.push ({
                 title : null,
                 boxArtPath : pathToBoxArt+rom.name.split('.')[0]+".jpg",
@@ -150,7 +150,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
                 romPath: frotendRomPath+rom.path.split('/')[2]+'/'+rom.path.split('/')[3]+'/'+rom.name,
                 categories:[null]
 
-            })
+            });
         });
 
 
