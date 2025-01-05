@@ -3,8 +3,7 @@ function updateAchievement(achievementList,data){
 
     achievementList.forEach(achievement => {
         
-    
-
+        console.log(achievement);
         if (achievement.achievementccondition === 'binarycheck'){
             console.log ('Achievement is binary compare');
         }
