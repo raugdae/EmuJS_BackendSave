@@ -60,7 +60,6 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
             }
         };
         
-
         console.log(romScan);
         
         const preparePayload = [];
@@ -114,6 +113,23 @@ router.post('/registernewroms', authMiddleware,async(req,res) =>{
     catch (err){
         console.log("resigetering rom error : ",err)
         res.status(500).json({message : 'Internal server error'});
+    }
+
+});
+
+router.post('/getromslist', authMiddleware, async (req,res) => {
+
+    try{
+
+        const querygetroms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shorname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
+                                FROM gamelist 
+                                LEFTJOIN device ON gamlist.fk_device = device.id`;
+
+        return res.send(200).json({message : 'endpoint not ready'})
+    }
+    catch (err)
+    {
+        return res.send(500).json({messaage : 'Internal server error'});
     }
 
 })

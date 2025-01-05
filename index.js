@@ -45,13 +45,13 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 
 app.get('/api/status',(req,res) => {res.status(200).json({message :"API Online"})});
 app.use('/api', userRoutes);
-app.use('/api/roms',scanRoms);
+
 
 
 //protected routes
 
 app.use('/api/savemanagement', saveRoutes);
 app.use('/api/user', userData);
-
+app.use('/api/roms',scanRoms);
 
 app.listen(listeningPort,() => console.log('API running on port : '+listeningPort))
