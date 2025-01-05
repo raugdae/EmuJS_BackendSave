@@ -29,7 +29,7 @@ router.get('/updateromlist', async (req,res) =>{
         
         let romScan = [];
 
-        const files = await fs.readdir('./shared/ROM', {recursive:true,withFileTypes:true});
+        const files = await fs.readdir(rootRomFolder, {recursive:true,withFileTypes:true});
 
         
 
