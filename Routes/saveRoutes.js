@@ -157,12 +157,12 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         resultUpdateAchievement.rows.forEach( async achievement => {
             recordAchievementValues = [userId,achievement];
 
+            console.log(recordAchievementValues);
+
             const resultRecordAchievementQuery = await pool.query(recordAchievementQuery,recordAchievementValues);
             console.log(resultRecordAchievementQuery.rows);
             
         });
-
-
 
         console.log(resultAchievementQuery.rows);
         
