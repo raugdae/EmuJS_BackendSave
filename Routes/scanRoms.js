@@ -39,7 +39,7 @@ router.get('/updateromlist', async (req,res) =>{
         files.forEach( async element => {
             if (!element.isDirectory()){
 
-                queryRomAlreadyExistsValue = element.name;
+                queryRomAlreadyExistsValue = [element.name];
 
                 const resultRomAlreadyExists = await pool.query(queryRomAlreadyExists,queryRomAlreadyExistsValue);
 
