@@ -36,11 +36,11 @@ router.get('/userprofile', authMiddleware , async(req,res) =>{
 
         if (saveFileList.rows.length === 0)
         {
-            userdata = 'SELECT users.nickname, users.email, users.creation_date, users.profile, users.id FROM users WHERE users.id = $1;';
+            userdata = 'SELECT users.nickname, users.email, users.creation_date, users.profile, users.id,users.userright FROM users WHERE users.id = $1;';
             
         }else{
 
-            userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile, users.creation_date, users.id FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.id,users.nickname,users.email,users.profile,users.creation_date) ;'
+            userdata = 'SELECT count(games.id) AS saves, users.nickname, users.email, users.profile, users.creation_date, users.id, user.userright FROM games LEFT JOIN users ON games.fk_user = users.id WHERE users.id = $1 GROUP BY (users.id,users.nickname,users.email,users.profile,users.creation_date) ;'
         }
 
         const result = await pool.query(userdata,value);
