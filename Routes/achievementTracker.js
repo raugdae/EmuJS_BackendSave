@@ -1,10 +1,8 @@
 function updateAchievement(achievementList,data){
-    //console.log('entering achievement update');
     let unlockedAchivement = [];
 
     achievementList.forEach(achievement => {
-        console.log (data[achievement.memorylocation]);
-        //console.log(achievement);
+        
         if (achievement.achievementcondition === 'binarycheck'){
             //console.log ('Achievement is binary compare');
             
@@ -15,7 +13,20 @@ function updateAchievement(achievementList,data){
 
         }
         if (achievement.achievementcondition === 'counter'){
-            console.log ('Achievement is binary compare');
+            let counter;
+            let memorypointer = achievement.memorylocation;
+            for (const i = 0; i <= achievement.rangeinram; i++){
+
+                if (data[memorypointer] === achievement.waitedvalue){
+                    counter++;
+                }
+
+                memorypointer += achievement.sizeinram
+            }
+
+            if (counter === achievement.totalvalue){
+                unlockedAchivement.push(achievement.id);
+            }
         }
     });
     
