@@ -40,7 +40,8 @@ router.get('/updateromlist', async (req,res) =>{
         const queryListConsoles = 'SELECT id,shortname FROM device';
         const resultListConsoles = await pool.query(queryListConsoles);
         
-       
+        console.log(resultListConsoles);
+
          for ( const element of files ){
             if (!element.isDirectory() && element.name != '.gitignore' && element.name != '.gitkeep'){
 
