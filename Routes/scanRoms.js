@@ -105,7 +105,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
 router.post('/registernewroms', authMiddleware,async(req,res) =>{
     const inputdata = req.body;
-    console.log(inputdata);
+    console.log('Recieved payload : ', inputdata);
 
     try {
     const queryInsertRom = 'INSERT INTO gamelist (name, filename, fk_device, boxartpath, yearofdistribution,developer,rompath,categorie) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)';
@@ -171,6 +171,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 router.post('/updateromdata', authMiddleware, async (req,res) =>{
 
     const inputData = req.body;
+    console.log('update data : ',inputData);
 
     try {
 
