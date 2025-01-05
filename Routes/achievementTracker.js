@@ -19,6 +19,7 @@ function updateAchievement(achievementList,data){
 
                 if (data[memorypointer] === achievement.waitedvalue){
                     counter++;
+                    console.log('its a match');
                 }
 
                 memorypointer += achievement.sizeinram
