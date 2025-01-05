@@ -1,12 +1,12 @@
 function updateAchievement(achievementList,data){
     console.log('entering achievement update');
-    console.log(data);
+    console.log(achievementList.memorylocation);
 
     achievementList.forEach(achievement => {
         
         //console.log(achievement);
         if (achievement.achievementcondition === 'binarycheck'){
-            console.log ('Achievement is binary compare');
+            //console.log ('Achievement is binary compare');
 
             if (data[achievement.memorylocation] === achievement.waitedvalue){
                 return achievement.id;
