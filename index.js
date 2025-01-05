@@ -6,6 +6,7 @@ const pool = require('./db');
 const saveRoutes = require('./Routes/saveRoutes');
 const userRoutes = require('./Routes/userController');
 const authMiddleware = require('./Routes/authMiddleware');
+const scanRoms = require('./Routes/scanRoms');
 
 const userData = require('./Routes/userInformation');
 const listeningPort = process.env.API_LISTENING_PORT;
@@ -44,6 +45,7 @@ app.use(express.urlencoded({limit:'100mb',extended :true, parameterlimit:1000000
 
 app.get('/api/status',(req,res) => {res.status(200).json({message :"API Online"})});
 app.use('/api', userRoutes);
+app.use('/api/roms');
 
 
 //protected routes

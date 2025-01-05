@@ -5,7 +5,7 @@ const authMiddleware = require('./authMiddleware');
 const fs = require('fs').promise
 
 
-router.get('/updateromlist',authMiddleware, async (req,res) =>{
+router.get('/updateromlist', async (req,res) =>{
 
     const userId = req.user.UserId ;
 
@@ -28,7 +28,13 @@ router.get('/updateromlist',authMiddleware, async (req,res) =>{
 
         let romScan = [];
 
-        
+        const files = await fs.readdir(rootRomFolder, {recursive:true,withFileTypes:true});
+
+        files.array.forEach(element => {
+            if (!element.isDirectory()){
+                romScan.push({name : element.name, path: element.path})
+            }
+        });
 
 
 
