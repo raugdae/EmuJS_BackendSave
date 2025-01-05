@@ -89,7 +89,7 @@ router.get('/updateromlist', async (req,res) =>{
 
         console.log(payloadJsonified);
 
-        return res.status(200).json(payloadJsonified);
+        return res.status(200).json(preparePayload);
 
     }
     catch (err) {
