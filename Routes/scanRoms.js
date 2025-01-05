@@ -129,7 +129,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 
     
 
-        const queryGetRoms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shortname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
+        const queryGetRoms = `SELECT gamelist.name AS title, gamelist.filename AS filename gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shortname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
                                 FROM gamelist 
                                 LEFT JOIN device ON gamelist.fk_device = device.id`;
 
@@ -139,11 +139,11 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 
         let preparePayload = [];
 
-        console.log('prepare payload');
+        //console.log('prepare payload');
         responseGetRoms.rows.map(rom => {
 
 
-            console.log('current game : ',rom);
+            //console.log('current game : ',rom);
             preparePayload.push ({
                 title : rom.title,
                 boxArtPath : rom.boxArtPath,
@@ -151,7 +151,8 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
                 console : rom.console,
                 developer : rom.developer,
                 romPath: rom.romPath,
-                categories:rom.categories
+                categories:rom.categories,
+                filename : rom.filename
 
             });
         });
