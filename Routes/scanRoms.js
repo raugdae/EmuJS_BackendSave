@@ -9,6 +9,7 @@ const fs = require('fs').promises;
 router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
     const userId = req.user.UserId ;
+    console.log('Entering checkroms');
 
     try {
         
@@ -111,7 +112,7 @@ router.post('/registernewroms', authMiddleware,async(req,res) =>{
 
     }
     catch (err){
-        console.log("resigetering rom error : ",err)
+        console.log("regisetering rom error : ",err)
         res.status(500).json({message : 'Internal server error'});
     }
 
@@ -132,6 +133,6 @@ router.post('/getromslist', authMiddleware, async (req,res) => {
         return res.send(500).json({messaage : 'Internal server error'});
     }
 
-})
+});
 
 module.exports = router;
