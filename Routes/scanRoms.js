@@ -77,7 +77,7 @@ router.get('/updateromlist', async (req,res) =>{
                 console : rom.path.split('/')[3],
                 consoleid : findDeviceId.id,
                 developer : null,
-                romPath: frotendRomPath+rom.path.split('/')[2]+rom.path.split('/')[3]+'/'+rom.name,
+                romPath: frotendRomPath+rom.path.split('/')[2]+'/'+rom.path.split('/')[3]+'/'+rom.name,
                 categories:[null]
 
             })
