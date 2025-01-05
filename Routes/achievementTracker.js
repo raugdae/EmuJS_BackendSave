@@ -13,9 +13,13 @@ function updateAchievement(achievementList,data){
 
         }
         if (achievement.achievementcondition === 'counter'){
-            let counter;
+            let counter = 0;
             let memorypointer = achievement.memorylocation;
+
+
             for (const i = 0; i <= achievement.rangeinram; i++){
+
+                console.log(data[memorypointer]);
 
                 if (data[memorypointer] === achievement.waitedvalue){
                     counter++;
