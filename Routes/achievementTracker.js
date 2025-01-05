@@ -1,6 +1,6 @@
 function updateAchievement(achievementList,data){
     let unlockedAchivement = [];
-
+    console.log(achievementList.rows)
     achievementList.forEach(achievement => {
         
         if (achievement.achievementcondition === 'binarycheck'){
