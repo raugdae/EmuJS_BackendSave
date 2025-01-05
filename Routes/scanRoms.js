@@ -41,23 +41,23 @@ router.get('/updateromlist', async (req,res) =>{
         const resultListConsoles = await pool.query(queryListConsoles);
         
        
-            for ( const element of async files => {
-                if (!element.isDirectory() && element.name != '.gitignore' && element.name != '.gitkeep'){
+         for ( const element of files {
+            if (!element.isDirectory() && element.name != '.gitignore' && element.name != '.gitkeep'){
 
-                    queryRomAlreadyExistsValue = [element.name];
+                queryRomAlreadyExistsValue = [element.name];
 
-                    const resultRomAlreadyExists = await pool.query(queryRomAlreadyExists,queryRomAlreadyExistsValue);
+                const resultRomAlreadyExists = await pool.query(queryRomAlreadyExists,queryRomAlreadyExistsValue);
 
-                    if (resultRomAlreadyExists.rows.length === 0){
-                        console.log('Preparing to add new rom :', element.name);
-                        romScan.push({name : element.name, path: element.path});
-                    }
+                if (resultRomAlreadyExists.rows.length === 0){
+                    console.log('Preparing to add new rom :', element.name);
+                    romScan.push({name : element.name, path: element.path});
+                }
                     /*
                     else{
                         console.log('Rom already exists : ',element.name);
                     }*/
-                }
-            });
+            }
+        });
         
 
         console.log(romScan);
