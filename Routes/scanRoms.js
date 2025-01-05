@@ -41,7 +41,7 @@ router.get('/updateromlist', async (req,res) =>{
         const resultListConsoles = await pool.query(queryListConsoles);
         
        
-         for ( const element of files {
+         for ( const element of files ){
             if (!element.isDirectory() && element.name != '.gitignore' && element.name != '.gitkeep'){
 
                 queryRomAlreadyExistsValue = [element.name];
@@ -57,7 +57,7 @@ router.get('/updateromlist', async (req,res) =>{
                         console.log('Rom already exists : ',element.name);
                     }*/
             }
-        });
+        };
         
 
         console.log(romScan);
