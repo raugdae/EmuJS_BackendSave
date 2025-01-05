@@ -2,7 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const pool = require('./../db');
 const authMiddleware = require('./authMiddleware');
-//const achievementTracker = require('./achievementTracker');
+const achievementTracker = require('./achievementTracker');
 
 
 router.get('/getsavefile', authMiddleware, async(req,res) => {
@@ -143,27 +143,24 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
         console.log(userId);
 
         // achievement check
-        const selectAchievementQuery = 'SELECT id, memorylocation, waitedvalue FROM achievement WHERE fk_gamelist = $1 ';
+        const selectAchievementQuery = 'SELECT memorylocation,waitedvalue,sizeinram,achievementcondition FROM achievement WHERE fk_gamelist = $1 ';
         const selectAchivementQueryValues = [gameId];
+
+        const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
 
         console.log(selectAchivementQueryValues);
 
+        const resultUpdateAchievement = achievementTracker.updateAchievement(recordAchievementQuery.rows,data);
+
         const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2) ON CONFLICT (fk_user, fk_achievement) DO NOTHING;'
         let recordAchievementValues;
-
-        const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
         
-        resultAchievementQuery.rows.forEach( async achievement => {
-            let saveMemoryValue = data[achievement.memorylocation];
+        resultUpdateAchievement.rows.forEach( async achievement => {
+            recordAchievementValues = [userId,achievement.id];
 
-            console.log(saveMemoryValue);
-
-            if (saveMemoryValue === achievement.waitedvalue){
-                recordAchievementValues = [userId,achievement.id];
-
-                const resultRecordAchievementQuery = await pool.query(recordAchievementQuery,recordAchievementValues)
-                console.log(resultRecordAchievementQuery.rows);
-            }
+            const resultRecordAchievementQuery = await pool.query(recordAchievementQuery,recordAchievementValues);
+            console.log(resultRecordAchievementQuery.rows);
+            
         });
 
 
