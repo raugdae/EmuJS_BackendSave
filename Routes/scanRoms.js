@@ -7,7 +7,7 @@ const fs = require('fs').promise
 
 router.get('/updateromlist', async (req,res) =>{
 
-    const userId = req.user.UserId ;
+    //const userId = req.user.UserId ;
 
     try {
         /*
