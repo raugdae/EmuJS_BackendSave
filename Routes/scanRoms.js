@@ -127,8 +127,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 
     try{
 
-        const pathToBoxArt = process.env.BOXART_PATH;
-        const frotendRomPath = process.env.FRONTEND_ROM_PATH;
+    
 
         const queryGetRoms = `SELECT gamelist.name AS title, gamelist.boxartpath AS boxArtPath, gamelist.yearofdistribution AS year, device.shortname AS console, gamelist.developer as developer, gamelist.rompath AS rompath, gamelist.categorie AS categorie 
                                 FROM gamelist 
@@ -143,18 +142,16 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
         console.log('prepare payload');
         responseGetRoms.rows.map(rom => {
 
-            const nameParts = rom.name ? rom.name.split('.') : [''];
-            const pathParts = rom.path ? rom.path.split('/') : [];
 
             console.log('current game : ',rom);
             preparePayload.push ({
-                title : null,
-                boxArtPath : pathToBoxArt+rom.name.split('.')[0]+".jpg",
-                year: null,
-                console : rom.path.split('/')[3],
-                developer : null,
-                romPath: frotendRomPath+rom.path.split('/')[2]+'/'+rom.path.split('/')[3]+'/'+rom.name,
-                categories:[null]
+                title : rom.title,
+                boxArtPath : rom.boxArtPath,
+                year: rom.year,
+                console : rom.console,
+                developer : rom.developer,
+                romPath: rom.romPath,
+                categories:rom.categories
 
             });
         });
