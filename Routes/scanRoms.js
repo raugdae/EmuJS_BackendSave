@@ -25,12 +25,13 @@ router.get('/updateromlist', async (req,res) =>{
         */
         const rootRomFolder = process.env.ROOT_ROM_FOLDER;
 
+        console.log('path to scan :', rootRomFolder);
         
         let romScan = [];
 
-        const files = await fs.readdir(rootRomFolder, {recursive:true,withFileTypes:true});
+        const files = await fs.readdir('./shared/ROM', {recursive:true,withFileTypes:true});
 
-        console.log('path to scan :', rootRomFolder);
+        
 
         files.array.forEach(element => {
             if (!element.isDirectory()){
@@ -38,7 +39,7 @@ router.get('/updateromlist', async (req,res) =>{
             }
         });
 
-
+        console.log(romScan);
 
 
 
