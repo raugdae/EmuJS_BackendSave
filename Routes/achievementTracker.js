@@ -20,15 +20,15 @@ function updateAchievement(achievementList,data){
 
                 if (data[memorypointer] === achievement.waitedvalue){
                     counter++;
-                    console.log('its a match');
                 }
 
                 memorypointer += achievement.sizeinram
             }
 
 
-            console.log(achievement.totalvalue);
-            if (counter === achievement.totalvalue){
+            
+            if (counter = achievement.totalvalue){
+                console.log('achievement unlocked')
                 unlockedAchivement.push(achievement.id);
             }
         }
