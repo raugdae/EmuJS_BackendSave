@@ -109,7 +109,7 @@ router.post('/registernewroms', authMiddleware,async(req,res) =>{
 
     try {
     const queryInsertRom = 'INSERT INTO gamelist (name, filename, fk_device, boxartpath, yearofdistribution,developer,rompath,categorie) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)';
-    const queryInsertRomValue = [inputdata.title,inputdata.romPath.split('/')[3],inputdata.consoleid,inputdata.boxArtPath,inputdata.year,inputdata.developer,inputdata.romPath,inputdata.categories];
+    const queryInsertRomValue = [inputdata.title,inputdata.romPath.split('/')[4],inputdata.consoleid,inputdata.boxArtPath,inputdata.year,inputdata.developer,inputdata.romPath,inputdata.categories];
 
     const resultInsertRomValue = await pool.query(queryInsertRom,queryInsertRomValue);
     
