@@ -25,6 +25,7 @@ router.get('/updateromlist', async (req,res) =>{
         }
         */
         const rootRomFolder = process.env.ROOT_ROM_FOLDER;
+        const pathToBoxArt = process.env.BOXART_PATH;
 
         console.log('path to scan :', rootRomFolder);
         
@@ -34,10 +35,14 @@ router.get('/updateromlist', async (req,res) =>{
 
         const queryRomAlreadyExists = 'SELECT id FROM gamelist WHERE filename = $1';
         let queryRomAlreadyExistsValue;
+
+        const queryListConsoles = 'SELECT id,shortname FROM device';
+
+        const resultListConsoles = await pool.query(queryListConsoles);
         
 
         files.forEach( async element => {
-            if (!element.isDirectory() && element.name != '.gitignore'){
+            if (!element.isDirectory() && element.name != '.gitignore' && element.name != '.gitkeep'){
 
                 queryRomAlreadyExistsValue = [element.name];
 
@@ -55,6 +60,23 @@ router.get('/updateromlist', async (req,res) =>{
         });
 
         console.log(romScan);
+        
+        const preparePayload = [];
+
+        romScan.forEach( rom =>{
+
+            preparePayload.push ({
+                title : null,
+                boxArtPath : pathToBoxArt+rom.name+".jpg",
+                year: null,
+                console : rom.path.split('/',)
+
+
+            })
+
+
+
+        })
 
 
 
