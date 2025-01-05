@@ -140,7 +140,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
        
 
         // achievement check
-        const selectAchievementQuery = 'SELECT memorylocation,waitedvalue,sizeinram,achievementcondition FROM achievement WHERE fk_gamelist = $1 ';
+        const selectAchievementQuery = 'SELECT id,memorylocation,waitedvalue,sizeinram,achievementcondition FROM achievement WHERE fk_gamelist = $1 ';
         const selectAchivementQueryValues = [gameId];
 
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);

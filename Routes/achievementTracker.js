@@ -1,7 +1,18 @@
 function updateAchievement(achievementList,data){
     console.log('entering achievement update');
 
-    console.log('Achievement :', achievementList);
+    achievementList.forEach(achievement => {
+        
+    });
+
+    if (achievement.achievementccondition === 'binarycheck'){
+        console.log ('Achievement is binary compare');
+    }
+    if (achievement.achievementccondition === 'counter'){
+        console.log ('Achievement is binary compare');
+    }
+
+    
 
 
 
