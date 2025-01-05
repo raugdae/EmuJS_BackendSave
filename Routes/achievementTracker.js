@@ -4,10 +4,10 @@ function updateAchievement(achievementList,data){
     achievementList.forEach(achievement => {
         
         console.log(achievement);
-        if (achievement.achievementccondition === 'binarycheck'){
+        if (achievement.achievementcondition === 'binarycheck'){
             console.log ('Achievement is binary compare');
         }
-        if (achievement.achievementccondition === 'counter'){
+        if (achievement.achievementcondition === 'counter'){
             console.log ('Achievement is binary compare');
         }
     });
