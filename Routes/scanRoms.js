@@ -146,14 +146,14 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
 
             console.log('current game : ',rom);
             preparePayload.push ({
-                title : rom.title,
-                boxArtPath : rom.boxArtPath,
-                year: rom.year,
-                console : rom.console,
-                developer : rom.developer,
-                romPath: rom.romPath,
-                categories:rom.categories,
-                filename : rom.filename
+                title : rom.title ?? null,
+                boxArtPath : rom.boxArtPath ?? null,
+                year: rom.year ?? null,
+                console : rom.console ?? null,
+                developer : rom.developer ?? null,
+                romPath: rom.romPath ?? null,
+                categories:rom.categories ?? null,
+                filename : rom.filename?? null
 
             });
         });
