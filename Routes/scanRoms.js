@@ -37,7 +37,7 @@ router.get('/updateromlist', async (req,res) =>{
         
 
         files.forEach( async element => {
-            if (!element.isDirectory()){
+            if (!element.isDirectory() || element.name != '.gitignore'){
 
                 queryRomAlreadyExistsValue = [element.name];
 
