@@ -32,20 +32,26 @@ router.get('/updateromlist', async (req,res) =>{
 
         const files = await fs.readdir(rootRomFolder, {recursive:true,withFileTypes:true});
 
+        const queryRomAlreadyExists = 'SELECT id FROM gamelist WHERE filename = $1';
+        let queryRomAlreadyExistsValue;
         
 
-        files.forEach(element => {
+        files.forEach( async element => {
             if (!element.isDirectory()){
-                romScan.push({name : element.name, path: element.path})
+
+                queryRomAlreadyExistsValue = element.name;
+
+                const resultRomAlreadyExists = await pool.query(queryRomAlreadyExists,queryRomAlreadyExistsValue);
+
+                if (resultRomAlreadyExists.rows.length === 0){
+                    console.log('Preparing to add new rom :', element.name);
+                    romScan.push({name : element.name, path: element.path});
+                }
+                else{
+                    console.log('Rom already exists : ',element.name);
+                }
             }
         });
-
-        console.log(romScan);
-
-
-
-
-
 
 
 
