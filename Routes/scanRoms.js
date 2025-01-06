@@ -158,7 +158,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
             });
         });
 
-        console.log(preparePayload);
+        //console.log(preparePayload);
         return res.status(200).json(preparePayload)
     }
     catch (err)
