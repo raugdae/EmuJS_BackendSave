@@ -152,7 +152,7 @@ router.get('/getromslist', authMiddleware, async (req,res) => {
                 console : rom.console ?? null,
                 developer : rom.developer ?? null,
                 romPath: rom.rompath ?? null,
-                categories:rom.categories ?? null,
+                categories:rom.categorie ?? null,
                 filename : rom.filename?? null
 
             });
