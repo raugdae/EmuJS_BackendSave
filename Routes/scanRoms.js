@@ -71,8 +71,8 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
 
         romScan.forEach( rom =>{
 
-            console.log(rom.path.split('/')[3]);
-            const findDeviceId = resultListConsoles.rows.find( device => device.shortname === rom.path.split('/')[3]);
+            console.log(rom.path.split('/')[4]);
+            const findDeviceId = resultListConsoles.rows.find( device => device.shortname === rom.path.split('/')[4]);
 
             preparePayload.push ({
                 title : null,
