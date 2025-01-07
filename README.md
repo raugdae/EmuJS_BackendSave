@@ -62,6 +62,14 @@ PostgreSQL V17.2
 |column name | type | Default value | Primary | constrained to | Description |
 |------------|------|---------------|---------|----------------|-------------|
 | id | UUID | gen_random_uuid() | yes | | Unique ID of record |
+| name | text | | | | Full name of the game |
+| filename | text | | | | Filename of the ROM inculding extension |
+| developer | text | | | | Developer of the game |
+| yearofdistribution | text | | | | Year the game came to the market|
+| categorie | text | | | | Text used for sorting on fronted Homepage |
+| rompath | text | | | | Path on the frontend to the ROM |
+| boxartpath | text | | | | Path on the frontend to the BoxArt of the game |
+| isavailable | boolean | | | | Boolean used to display or not the game in the Frontend |
 
 
 
