@@ -19,6 +19,34 @@ Actually the backend stuff is still in dev. There still a lot of functionnality 
 
 *and many more to come*
 
+#Prerequisits
+As for today, there is no packaged app solution.
+I'll describe the environnement i'm working with. It was designed to work with the frontend developped by Zad-Sixstring 
+
+##SERVER
+Debian 12 server in CLI Mode
+
+## DATABASE
+PostgreSQL V17.2
+*A script for the table creation will come in the future, for now you can find here the structure of the DATABASE*
+**achievement**
+|column name | type | Default value | Primary | constrained to | Description |
+|------------|------|---------------|---------|----------------|-------------|
+| id | UUID | gen_random_uuid() | yes | | Unique ID of record |
+| memorylocation | bigint | | | array position in savefile (8BitArray)|
+| achievementname | text | | | Title of the achievement |
+| achievementpic | text | | | Path to the achievement picture |
+| waitedvalue | integer | | | Value to find at memorylocation |
+| sizeinram | integer | | | size of waitedvalue in RAM (8bitArray)|
+| description | test | | | Description of the achievement |
+| achievementcondition | text | | | condition of achievement |
+| rangeinram | integer | | | Some achievement can be calculated on a range |
+| totalvalue | integer | | | Totale value for some condition of achievement |
+|------------|----------|-----|----------|-----------|-----------|
+
+
+
+
 # Disclaimer
 We do ***not*** provide any ROM of game, neither we promot IP violation. provide your own ROM file from dumped cartridges or any **legal** channel.<br>
 I'm also not a professional coder, code may have error, security issue,... Bear in mind i cannot be held as responsible if any critical data have been compromised (hacked, encrypted, stolen,...)
