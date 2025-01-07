@@ -70,7 +70,19 @@ PostgreSQL V17.2
 | rompath | text | | | | Path on the frontend to the ROM |
 | boxartpath | text | | | | Path on the frontend to the BoxArt of the game |
 | isavailable | boolean | | | | Boolean used to display or not the game in the Frontend |
+| fk_device | UUID | | | device.id | Foreign key to device |
 
+
+**games**
+|column name | type | Default value | Primary | constrained to | Description |
+|------------|------|---------------|---------|----------------|-------------|
+| id | UUID | gen_random_uuid() | yes | | Unique ID of record |
+| file_name | text | | | | Name of the save file |
+| size | integer | | | | Size of the data of save file |
+| data | JSONB | | | | JSON array ([8bit data]) of the data of the save file|
+| fk_user | UUID | | | users.id | Foreign key to users |
+| fk_gamelist | UUID | | | gamelist.id | Foreign key to gamelist |
+---
 
 
 
