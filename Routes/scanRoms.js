@@ -82,7 +82,8 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
                 consoleid : findDeviceId.id,
                 developer : null,
                 romPath: frotendRomPath+rom.path.split('/')[2]+'/'+rom.path.split('/')[3]+'/'+rom.name,
-                categories:[null]
+                categories:[null],
+                isAvailable:true
 
             })
         })
@@ -108,8 +109,8 @@ router.post('/registernewroms', authMiddleware,async(req,res) =>{
     console.log('Recieved payload : ', inputdata);
 
     try {
-    const queryInsertRom = 'INSERT INTO gamelist (name, filename, fk_device, boxartpath, yearofdistribution,developer,rompath,categorie) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)';
-    const queryInsertRomValue = [inputdata.title,inputdata.romPath.split('/')[4],inputdata.consoleid,inputdata.boxArtPath,inputdata.year,inputdata.developer,inputdata.romPath,inputdata.categories];
+    const queryInsertRom = 'INSERT INTO gamelist (name, filename, fk_device, boxartpath, yearofdistribution,developer,rompath,categorie,isavailable) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)';
+    const queryInsertRomValue = [inputdata.title,inputdata.romPath.split('/')[4],inputdata.consoleid,inputdata.boxArtPath,inputdata.year,inputdata.developer,inputdata.romPath,inputdata.categories,inputdata.isAvailable];
 
     const resultInsertRomValue = await pool.query(queryInsertRom,queryInsertRomValue);
     
