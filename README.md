@@ -33,16 +33,16 @@ PostgreSQL V17.2
 |column name | type | Default value | Primary | constrained to | Description |
 |------------|------|---------------|---------|----------------|-------------|
 | id | UUID | gen_random_uuid() | yes | | Unique ID of record |
-| memorylocation | bigint | | | array position in savefile (8BitArray)|
-| achievementname | text | | | Title of the achievement |
-| achievementpic | text | | | Path to the achievement picture |
-| waitedvalue | integer | | | Value to find at memorylocation |
-| sizeinram | integer | | | size of waitedvalue in RAM (8bitArray)|
-| description | test | | | Description of the achievement |
-| achievementcondition | text | | | condition of achievement |
-| rangeinram | integer | | | Some achievement can be calculated on a range |
-| totalvalue | integer | | | Totale value for some condition of achievement |
-|------------|----------|-----|----------|-----------|-----------|
+| memorylocation | bigint | | | | array position in savefile (8BitArray)|
+| achievementname | text | | | | Title of the achievement |
+| achievementpic | text | | | | Path to the achievement picture |
+| waitedvalue | integer | | | | Value to find at memorylocation |
+| sizeinram | integer | | | | size of waitedvalue in RAM (8bitArray)|
+| description | text | | | | Description of the achievement |
+| achievementcondition | text | | | | condition of achievement |
+| rangeinram | integer | | | | Some achievement can be calculated on a range |
+| totalvalue | integer | | | | Totale value for some condition of achievement |
+
 
 
 
