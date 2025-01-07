@@ -58,6 +58,12 @@ PostgreSQL V17.2
 | builder | text | | | | Builder of the device |
 
 
+**gamelist**
+|column name | type | Default value | Primary | constrained to | Description |
+|------------|------|---------------|---------|----------------|-------------|
+| id | UUID | gen_random_uuid() | yes | | Unique ID of record |
+
+
 
 
 
