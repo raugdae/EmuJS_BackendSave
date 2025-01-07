@@ -42,6 +42,7 @@ PostgreSQL V17.2
 | achievementcondition | text | | | | condition of achievement |
 | rangeinram | integer | | | | Some achievement can be calculated on a range |
 | totalvalue | integer | | | | Totale value for some condition of achievement |
+| fk_gamelist | UUID | | | gamelist.id | foreign key of gamelist table |
 
 
 
