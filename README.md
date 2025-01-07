@@ -19,15 +19,15 @@ Actually the backend stuff is still in dev. There still a lot of functionnality 
 
 *and many more to come*
 
-#Prerequisits
+# Prerequisits
 As for today, there is no packaged app solution.
 I'll describe the environnement i'm working with. It was designed to work with the frontend developped by Zad-Sixstring 
 
-##SERVER
+## SERVER
 Debian 12 server in CLI Mode
 
 ## DATABASE
-PostgreSQL V17.2
+PostgreSQL V17.2  
 *A script for the table creation will come in the future, for now you can find here the structure of the DATABASE*
 **achievement**
 |column name | type | Default value | Primary | constrained to | Description |
