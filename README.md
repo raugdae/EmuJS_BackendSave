@@ -24,7 +24,11 @@ As for today, there is no packaged app solution.
 I'll describe the environnement i'm working with. It was designed to work with the frontend developped by Zad-Sixstring 
 
 ## SERVER
-Debian 12 server in CLI Mode
+Debian 12 server in CLI Mode with these packages :
+- PostgreSQL V17.2 database
+- NFS (client/server)
+- FTP Server
+- NodeJS
 
 ## DATABASE
 PostgreSQL V17.2  
@@ -43,6 +47,17 @@ PostgreSQL V17.2
 | rangeinram | integer | | | | Some achievement can be calculated on a range |
 | totalvalue | integer | | | | Totale value for some condition of achievement |
 | fk_gamelist | UUID | | | gamelist.id | foreign key of gamelist table |
+
+
+**device**
+|column name | type | Default value | Primary | constrained to | Description |
+|------------|------|---------------|---------|----------------|-------------|
+| id | UUID | gen_random_uuid() | yes | | Unique ID of record |
+| name | text | | | | Console name|
+| shortname | text | | | | Shortname of console (GB/SNES/SMG)|
+| builder | text | | | | Builder of the device |
+
+
 
 
 
