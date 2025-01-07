@@ -32,8 +32,8 @@ Debian 12 server in CLI Mode with these packages :
 
 ## DATABASE
 PostgreSQL V17.2  
-*A script for the table creation will come in the future, for now you can find here the structure of the DATABASE*
-**achievement**
+*A script for the table creation will come in the future, for now you can find here the structure of the DATABASE*  
+**achievement**  
 |column name | type | Default value | Primary | constrained to | Description |
 |------------|------|---------------|---------|----------------|-------------|
 | id | UUID | gen_random_uuid() | yes | | Unique ID of record |
@@ -49,7 +49,7 @@ PostgreSQL V17.2
 | fk_gamelist | UUID | | | gamelist.id | foreign key of gamelist table |
 
 
-**device**
+**device**  
 |column name | type | Default value | Primary | constrained to | Description |
 |------------|------|---------------|---------|----------------|-------------|
 | id | UUID | gen_random_uuid() | yes | | Unique ID of record |
