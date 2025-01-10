@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const pool = require('./db');
+const https = require('https');
+const fs = require('fs');
 
 const saveRoutes = require('./Routes/saveRoutes');
 const userRoutes = require('./Routes/userController');
@@ -12,6 +14,11 @@ const userData = require('./Routes/userInformation');
 const listeningPort = process.env.API_LISTENING_PORT;
 
 const app = express();
+
+const options = {
+   key: fs.readFileSync('/etc/letsencrypt/live/remote.raug-info.ch/privkey.pem'),
+   cert: fs.readFileSync('/etc/letsencrypt/live/remote.raug-info.ch/fullchain.pem')
+};
 
 const corsOptions = {
    origin:'*',
@@ -54,4 +61,6 @@ app.use('/api/savemanagement', saveRoutes);
 app.use('/api/user', userData);
 app.use('/api/roms',scanRoms);
 
-app.listen(listeningPort,() => console.log('API running on port : '+listeningPort))
+https.createServer(options, app).listen(listeningPort, () => {
+   console.log('API HTTPS running on port : ' + listeningPort);
+});

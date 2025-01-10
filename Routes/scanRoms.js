@@ -83,7 +83,7 @@ router.get('/checknewroms', authMiddleware, async (req,res) =>{
                 developer : null,
                 romPath: frotendRomPath+rom.path.split('/')[2]+'/'+rom.path.split('/')[3]+'/'+rom.name,
                 categories:[null],
-                isAvailable:true
+                isAvailable: true
 
             })
         })

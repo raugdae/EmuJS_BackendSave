@@ -77,7 +77,7 @@ router.post('/setsavefile', authMiddleware, async(req, res) => {
         const gameCheck = await pool.query(checkGameQuery, [game]);
         
         if (gameCheck.rows.length === 0) {
-            return res.status(404).json({ message: 'Game not found in gamelist' });
+            return res.status(200).json({ message: 'Game not found in gamelist' });
         }
 
         const query = `
