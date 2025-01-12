@@ -43,7 +43,7 @@ function updateAchievement(achievementList, data) {
         unlockedAchivement.push(achievement.id);
       }
     }
-    if (achievement.achievementcondition === 'summig'){
+    if (achievement.achievementcondition === 'summing'){
         
         console.log('achievement summing')
         let summedvalue = 0;
