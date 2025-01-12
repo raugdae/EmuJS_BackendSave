@@ -140,7 +140,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
        
 
         // achievement check
-        const selectAchievementQuery = 'SELECT id,memorylocation,waitedvalue,sizeinram,achievementcondition,rangeinram,totalvalue FROM achievement WHERE fk_gamelist = $1 ';
+        const selectAchievementQuery = 'SELECT id,memorylocation,waitedvalue,sizeinram,achievementcondition,rangeinram,totalvalue,bittocheck FROM achievement WHERE fk_gamelist = $1 ';
         const selectAchivementQueryValues = [gameId];
         const resultAchievementQuery = await pool.query(selectAchievementQuery,selectAchivementQueryValues);
 
@@ -149,7 +149,7 @@ router.post('/updatesavefile', authMiddleware, async (req, res) =>{
 
         const resultUpdateAchievement = achievementTracker.updateAchievement(resultAchievementQuery.rows,data);
         
-        console.log('return from fucntion', resultUpdateAchievement);
+        //console.log('return from fucntion', resultUpdateAchievement);
 
         const recordAchievementQuery = 'INSERT INTO users_achievement (fk_user,fk_achievement) VALUES ($1,$2) ON CONFLICT (fk_user, fk_achievement) DO NOTHING;'
         let recordAchievementValues;
