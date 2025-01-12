@@ -32,21 +32,32 @@ function updateAchievement(achievementList, data) {
       }
     }
     if (achievement.achievementcondition === "bitcheck") {
-        console.log('Achievement bit check');
-
-        console.log ('bit value : ', data[achievement.memorylocation]);
-        console.log ('bit to check :', achievement.bittocheck);
-        console.log ('bit shift', data[achievement.memorylocation] >> achievement.bittocheck-1);
-
+    
       const bitvalue =
         (data[achievement.memorylocation] >> achievement.bittocheck-1) & 1;
 
       console.log(bitvalue);
 
       if (bitvalue) {
-        console.log("Achivement bitwyse unlocked");
+        //console.log("Achivement bitwyse unlocked");
         unlockedAchivement.push(achievement.id);
       }
+    }
+    if (achievement.achievementcondition === 'summig'){
+        
+        let summedvalue = 0;
+        let memorypointer = achievement.memorylocation;
+
+        for (let i = 0; i <= achievement.rangeinram;i++){
+            summedvalue += data[memorypointer];
+
+            memorypointer += achievement.sizeinram;
+        }
+
+        if (summedvalue >= achievement.totalvalue){
+            unlockedAchivement.push(achievement.id);
+        }
+
     }
   });
 
