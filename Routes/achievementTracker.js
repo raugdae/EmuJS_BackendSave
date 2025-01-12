@@ -32,6 +32,7 @@ function updateAchievement(achievementList, data) {
       }
     }
     if (achievement.achievementcondition === "bitcheck") {
+        console.log('Achievement bit check');
       const bitvalue =
         (data[achievement.memorylocation] >> achievement.bittocheck) & 1;
 
