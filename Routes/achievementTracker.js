@@ -27,7 +27,7 @@ function updateAchievement(achievementList, data) {
 
       console.log(counter + ":" + achievement.totalvalue);
       if (counter >= achievement.totalvalue) {
-        console.log("achievement unlocked");
+        //console.log("achievement unlocked");
         unlockedAchivement.push(achievement.id);
       }
     }
@@ -36,7 +36,7 @@ function updateAchievement(achievementList, data) {
       const bitvalue =
         (data[achievement.memorylocation] >> achievement.bittocheck-1) & 1;
 
-      console.log(bitvalue);
+      //console.log(bitvalue);
 
       if (bitvalue) {
         //console.log("Achivement bitwyse unlocked");
@@ -45,15 +45,17 @@ function updateAchievement(achievementList, data) {
     }
     if (achievement.achievementcondition === 'summig'){
         
+        console.log('achievement summing')
         let summedvalue = 0;
         let memorypointer = achievement.memorylocation;
 
         for (let i = 0; i <= achievement.rangeinram;i++){
             summedvalue += data[memorypointer];
-
+            console.log('Collected in level : ',data[memorypointer]);
             memorypointer += achievement.sizeinram;
         }
 
+        console.log('Coins total : ', summedvalue);
         if (summedvalue >= achievement.totalvalue){
             unlockedAchivement.push(achievement.id);
         }
