@@ -32,9 +32,8 @@ function updateAchievement(achievementList, data) {
       }
     }
     if (achievement.achievementcondition === "bitcheck") {
-    
       const bitvalue =
-        (data[achievement.memorylocation] >> achievement.bittocheck-1) & 1;
+        (data[achievement.memorylocation] >> (achievement.bittocheck - 1)) & 1;
 
       //console.log(bitvalue);
 
@@ -43,23 +42,18 @@ function updateAchievement(achievementList, data) {
         unlockedAchivement.push(achievement.id);
       }
     }
-    if (achievement.achievementcondition === 'summing'){
-        
-        console.log('achievement summing')
-        let summedvalue = 0;
-        let memorypointer = achievement.memorylocation;
+    if (achievement.achievementcondition === "summing") {
+      let summedvalue = 0;
+      let memorypointer = achievement.memorylocation;
 
-        for (let i = 0; i <= achievement.rangeinram;i++){
-            summedvalue += data[memorypointer];
-            console.log('Collected in level : ',data[memorypointer]);
-            memorypointer += achievement.sizeinram;
-        }
+      for (let i = 0; i <= achievement.rangeinram; i++) {
+        summedvalue += data[memorypointer];
+        memorypointer += achievement.sizeinram;
+      }
 
-        console.log('Coins total : ', summedvalue);
-        if (summedvalue >= achievement.totalvalue){
-            unlockedAchivement.push(achievement.id);
-        }
-
+      if (summedvalue >= achievement.totalvalue) {
+        unlockedAchivement.push(achievement.id);
+      }
     }
   });
 
