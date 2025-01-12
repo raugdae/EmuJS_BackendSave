@@ -35,7 +35,9 @@ function updateAchievement(achievementList, data) {
       const bitvalue =
         (data[achievement.memorylocation] >> (achievement.bittocheck - 1)) & 1;
 
-      //console.log(bitvalue);
+
+        console.log(data[achievement.memorylocation]);
+        console.log(bitvalue);
 
       if (bitvalue) {
         //console.log("Achivement bitwyse unlocked");
