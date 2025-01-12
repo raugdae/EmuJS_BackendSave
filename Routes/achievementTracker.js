@@ -36,10 +36,10 @@ function updateAchievement(achievementList, data) {
 
         console.log ('bit value : ', data[achievement.memorylocation]);
         console.log ('bit to check :', achievement.bittocheck);
-        console.log ('bit shift', data[achievement.memorylocation] >> achievement.bittocheck);
+        console.log ('bit shift', data[achievement.memorylocation] >> achievement.bittocheck-1);
 
       const bitvalue =
-        (data[achievement.memorylocation] >> achievement.bittocheck) & 1;
+        (data[achievement.memorylocation] >> achievement.bittocheck-1) & 1;
 
       console.log(bitvalue);
 
